@@ -1,0 +1,13 @@
+Food Group,GGM Degree,GGM Betweenness,Poor Diet Degree,NonPoor Diet Degree,GGM Community
+Antidiabetic Medication,0,0,0,0,-1
+Hyperlipidemia,0,0,0,0,-1
+Statin Medication,0,0,0,0,-1
+Angina/Myocardial Infarction,0,0,0,0,-1
+Stroke,0,0,0,0,-1
+Chronic kidney disease (eGFR<60),0,0,0,0,-1
+Systolic blood pressure (mmHg),0,0,0,0,-1
+Diastolic Blood Pressure (mmHg),0,0,0,0,-1
+Total Cholesterol (mg/dL),0,0,0,0,-1
+Triglycerides (mg/dL),0,0,0,0,-1
+LDL-C (mg/dL),0,0,0,0,-1
+HDL-C (mg/dL),0,0,0,0,-1
