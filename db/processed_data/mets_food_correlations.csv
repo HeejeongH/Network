@@ -1,0 +1,73 @@
+Food_Group,MetS_Component,Correlation,P_value,Significant
+Grain Products,Waist circumference (cm),-0.003573501628674515,0.587548687675044,No
+Grain Products,Systolic blood pressure (mmHg),0.015257039925070612,0.020565642704801892,Yes
+Grain Products,Diastolic Blood Pressure (mmHg),0.004638053187684867,0.48144985892692493,No
+Grain Products,Triglycerides (mg/dL),-0.005758831264983647,0.38206981607017976,No
+Grain Products,HDL-C (mg/dL),-0.028571184105363696,1.4414470358292155e-05,Yes
+Grain Products,Fasting glucose (mg/dL),0.02342456696040726,0.00037669561507067774,Yes
+Protein Foods,Waist circumference (cm),0.04179023139793352,2.2136027400065923e-10,Yes
+Protein Foods,Systolic blood pressure (mmHg),0.007066174964853489,0.2834842268272469,No
+Protein Foods,Diastolic Blood Pressure (mmHg),-0.004479988166276016,0.4965165487349301,No
+Protein Foods,Triglycerides (mg/dL),-0.012255891602308043,0.06284557157988932,No
+Protein Foods,HDL-C (mg/dL),0.00837121833882224,0.20386567469882877,No
+Protein Foods,Fasting glucose (mg/dL),0.012849846501309228,0.05112319127372628,No
+Vegetables,Waist circumference (cm),-0.010617874890756001,0.1070407201920546,No
+Vegetables,Systolic blood pressure (mmHg),0.016356487607513605,0.01303646349015004,Yes
+Vegetables,Diastolic Blood Pressure (mmHg),-0.0023034095790648306,0.7266280380817112,No
+Vegetables,Triglycerides (mg/dL),-0.04961756991639717,4.859070607556647e-14,Yes
+Vegetables,HDL-C (mg/dL),0.013227051801923318,0.04467473505008004,Yes
+Vegetables,Fasting glucose (mg/dL),0.016924480881803237,0.01019924053227784,Yes
+Dairy Products,Waist circumference (cm),-0.049213804537232494,7.764310995360777e-14,Yes
+Dairy Products,Systolic blood pressure (mmHg),-0.03431502335057601,1.8893637620650357e-07,Yes
+Dairy Products,Diastolic Blood Pressure (mmHg),-0.06025863604387656,5.464014513421983e-20,Yes
+Dairy Products,Triglycerides (mg/dL),-0.08289890732558695,2.0023149291879546e-36,Yes
+Dairy Products,HDL-C (mg/dL),0.04733219188220429,6.567008224066332e-13,Yes
+Dairy Products,Fasting glucose (mg/dL),-0.02857478372897148,1.4378671378923378e-05,Yes
+Fruits,Waist circumference (cm),-0.0887957527620755,1.4771552482152945e-41,Yes
+Fruits,Systolic blood pressure (mmHg),-0.006031916491613928,0.3599086320945246,No
+Fruits,Diastolic Blood Pressure (mmHg),-0.048074721446336455,2.8551975988978366e-13,Yes
+Fruits,Triglycerides (mg/dL),-0.09051077926385935,4.0770913772078146e-43,Yes
+Fruits,HDL-C (mg/dL),0.03652469480866304,2.929338864428825e-08,Yes
+Fruits,Fasting glucose (mg/dL),0.00944662373052015,0.15161482778111343,No
+Fried Foods,Waist circumference (cm),0.07002028432983637,1.9243545758057943e-26,Yes
+Fried Foods,Systolic blood pressure (mmHg),-0.006158641809777423,0.3499046549599206,No
+Fried Foods,Diastolic Blood Pressure (mmHg),-0.005910957927417677,0.3696231486442114,No
+Fried Foods,Triglycerides (mg/dL),0.031264937977332014,2.068780519669385e-06,Yes
+Fried Foods,HDL-C (mg/dL),-0.031428987550742804,1.8285470620266375e-06,Yes
+Fried Foods,Fasting glucose (mg/dL),-0.026086717171937838,7.490448711458788e-05,Yes
+High Fat Meat,Waist circumference (cm),0.14175555630775472,1.0430392978798688e-103,Yes
+High Fat Meat,Systolic blood pressure (mmHg),0.03878551748295264,3.882481346159135e-09,Yes
+High Fat Meat,Diastolic Blood Pressure (mmHg),0.062408673338800284,2.501746012773279e-21,Yes
+High Fat Meat,Triglycerides (mg/dL),0.10068767531677866,5.499150329581051e-53,Yes
+High Fat Meat,HDL-C (mg/dL),-0.08053916832036102,1.8041107194431365e-34,Yes
+High Fat Meat,Fasting glucose (mg/dL),0.03934014358764956,2.3235610417897945e-09,Yes
+Processed Foods,Waist circumference (cm),0.03956990571855379,1.8745959943914562e-09,Yes
+Processed Foods,Systolic blood pressure (mmHg),-0.041668815929558,2.495101562283011e-10,Yes
+Processed Foods,Diastolic Blood Pressure (mmHg),-0.01984331293737402,0.0025941612218925688,Yes
+Processed Foods,Triglycerides (mg/dL),0.044664566931526824,1.1801458105947416e-11,Yes
+Processed Foods,HDL-C (mg/dL),-0.03126551934428123,2.0678779313168803e-06,Yes
+Processed Foods,Fasting glucose (mg/dL),-0.05675737767289392,6.59980130543806e-18,Yes
+Sugar-Sweetened Beverages,Waist circumference (cm),0.10875779381581122,1.4370129151238534e-61,Yes
+Sugar-Sweetened Beverages,Systolic blood pressure (mmHg),0.00024078150999810047,0.970846935792467,No
+Sugar-Sweetened Beverages,Diastolic Blood Pressure (mmHg),0.015302534190511504,0.020191439226724717,Yes
+Sugar-Sweetened Beverages,Triglycerides (mg/dL),0.10746899127966221,3.742758034350282e-60,Yes
+Sugar-Sweetened Beverages,HDL-C (mg/dL),-0.11417229551917785,1.0520337824344096e-67,Yes
+Sugar-Sweetened Beverages,Fasting glucose (mg/dL),-0.015741298121654895,0.01687686142790771,Yes
+Additional Salt Use,Waist circumference (cm),0.05941895589593217,1.770079669585061e-19,Yes
+Additional Salt Use,Systolic blood pressure (mmHg),0.001504282170230476,0.8193961401728515,No
+Additional Salt Use,Diastolic Blood Pressure (mmHg),-0.000713342979957654,0.9137799403081078,No
+Additional Salt Use,Triglycerides (mg/dL),0.051314058322450375,6.510679237095551e-15,Yes
+Additional Salt Use,HDL-C (mg/dL),-0.027960159028178232,2.1893169321770667e-05,Yes
+Additional Salt Use,Fasting glucose (mg/dL),-0.0003597658591284636,0.9564526319560503,No
+Salty Food Consumption,Waist circumference (cm),0.140014311047184,3.3713005042268716e-101,Yes
+Salty Food Consumption,Systolic blood pressure (mmHg),0.042962473270535005,6.850094109802125e-11,Yes
+Salty Food Consumption,Diastolic Blood Pressure (mmHg),0.0648933088119095,6.206759415726091e-23,Yes
+Salty Food Consumption,Triglycerides (mg/dL),0.11894124986036078,2.3241744993598064e-73,Yes
+Salty Food Consumption,HDL-C (mg/dL),-0.09127852392190855,7.992746736192564e-44,Yes
+Salty Food Consumption,Fasting glucose (mg/dL),0.06487715829993052,6.36062869908435e-23,Yes
+Sweet Food Consumption,Waist circumference (cm),-0.07165871501663508,1.2802079337925897e-27,Yes
+Sweet Food Consumption,Systolic blood pressure (mmHg),-0.11160724763963313,9.256360855690387e-65,Yes
+Sweet Food Consumption,Diastolic Blood Pressure (mmHg),-0.10008365871867068,2.2684464980704604e-52,Yes
+Sweet Food Consumption,Triglycerides (mg/dL),-0.07015226274544402,1.5505177206023513e-26,Yes
+Sweet Food Consumption,HDL-C (mg/dL),0.04486868690453188,9.515327649442672e-12,Yes
+Sweet Food Consumption,Fasting glucose (mg/dL),-0.14319574049710718,8.286971322535871e-106,Yes

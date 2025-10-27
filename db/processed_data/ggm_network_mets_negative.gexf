@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-10-26">
+    <creator>NetworkX 3.5</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <nodes>
+      <node id="Grain Products" label="Grain Products" />
+      <node id="Protein Foods" label="Protein Foods" />
+      <node id="Vegetables" label="Vegetables" />
+      <node id="Dairy Products" label="Dairy Products" />
+      <node id="Fruits" label="Fruits" />
+      <node id="Fried Foods" label="Fried Foods" />
+      <node id="High Fat Meat" label="High Fat Meat" />
+      <node id="Processed Foods" label="Processed Foods" />
+      <node id="Sugar-Sweetened Beverages" label="Sugar-Sweetened Beverages" />
+      <node id="Additional Salt Use" label="Additional Salt Use" />
+      <node id="Salty Food Consumption" label="Salty Food Consumption" />
+      <node id="Sweet Food Consumption" label="Sweet Food Consumption" />
+    </nodes>
+    <edges>
+      <edge source="Grain Products" target="Protein Foods" id="0" weight="0.2550042033943415" />
+      <edge source="Grain Products" target="Vegetables" id="1" weight="0.08421093561800336" />
+      <edge source="Grain Products" target="Dairy Products" id="2" weight="0.01800520110881007" />
+      <edge source="Grain Products" target="Fruits" id="3" weight="0.058541307404218965" />
+      <edge source="Grain Products" target="Fried Foods" id="4" weight="0.012659892501147284" />
+      <edge source="Grain Products" target="High Fat Meat" id="5" weight="0.04746777916515038" />
+      <edge source="Grain Products" target="Processed Foods" id="6" weight="0.029472702028008033" />
+      <edge source="Grain Products" target="Sugar-Sweetened Beverages" id="7" weight="0.02398095659862841" />
+      <edge source="Grain Products" target="Additional Salt Use" id="8" weight="0.06068380786889584" />
+      <edge source="Grain Products" target="Salty Food Consumption" id="9" weight="0.052536226579601546" />
+      <edge source="Grain Products" target="Sweet Food Consumption" id="10" weight="0.0400405993918739" />
+      <edge source="Protein Foods" target="Vegetables" id="11" weight="0.6043077675318869" />
+      <edge source="Protein Foods" target="Dairy Products" id="12" weight="0.055248202182825445" />
+      <edge source="Protein Foods" target="Fruits" id="13" weight="0.03098115897203647" />
+      <edge source="Protein Foods" target="Fried Foods" id="14" weight="0.08794657874268212" />
+      <edge source="Protein Foods" target="High Fat Meat" id="15" weight="0.19365741267871306" />
+      <edge source="Protein Foods" target="Processed Foods" id="16" weight="0.015507331800968445" />
+      <edge source="Protein Foods" target="Sugar-Sweetened Beverages" id="17" weight="0.02085522570547195" />
+      <edge source="Protein Foods" target="Additional Salt Use" id="18" weight="0.014976632448692469" />
+      <edge source="Protein Foods" target="Salty Food Consumption" id="19" weight="0.04530190206423158" />
+      <edge source="Vegetables" target="Dairy Products" id="20" weight="0.08122586028872779" />
+      <edge source="Vegetables" target="Fruits" id="21" weight="0.20443160380253966" />
+      <edge source="Vegetables" target="Fried Foods" id="22" weight="0.041010422568148595" />
+      <edge source="Vegetables" target="High Fat Meat" id="23" weight="0.013122201739366015" />
+      <edge source="Vegetables" target="Processed Foods" id="24" weight="0.10612478794484469" />
+      <edge source="Vegetables" target="Sugar-Sweetened Beverages" id="25" weight="0.054064193722521685" />
+      <edge source="Vegetables" target="Additional Salt Use" id="26" weight="0.023053345140773774" />
+      <edge source="Vegetables" target="Salty Food Consumption" id="27" weight="0.056158411554569125" />
+      <edge source="Vegetables" target="Sweet Food Consumption" id="28" weight="0.072167670187968" />
+      <edge source="Dairy Products" target="Fruits" id="29" weight="0.21962320156854964" />
+      <edge source="Dairy Products" target="Fried Foods" id="30" weight="0.035779825312549515" />
+      <edge source="Dairy Products" target="High Fat Meat" id="31" weight="0.013342741361267596" />
+      <edge source="Dairy Products" target="Processed Foods" id="32" weight="0.04601962185545936" />
+      <edge source="Dairy Products" target="Salty Food Consumption" id="33" weight="0.07172029312863704" />
+      <edge source="Dairy Products" target="Sweet Food Consumption" id="34" weight="0.059852635548990264" />
+      <edge source="Fruits" target="High Fat Meat" id="35" weight="0.07712675147648736" />
+      <edge source="Fruits" target="Processed Foods" id="36" weight="0.11691870806019981" />
+      <edge source="Fruits" target="Sugar-Sweetened Beverages" id="37" weight="0.103645765946657" />
+      <edge source="Fruits" target="Additional Salt Use" id="38" weight="0.041773208669202214" />
+      <edge source="Fruits" target="Salty Food Consumption" id="39" weight="0.057785036270889475" />
+      <edge source="Fruits" target="Sweet Food Consumption" id="40" weight="0.0714308739199121" />
+      <edge source="Fried Foods" target="High Fat Meat" id="41" weight="0.35325577963900245" />
+      <edge source="Fried Foods" target="Processed Foods" id="42" weight="0.250408189469992" />
+      <edge source="Fried Foods" target="Sugar-Sweetened Beverages" id="43" weight="0.046453266190757556" />
+      <edge source="Fried Foods" target="Additional Salt Use" id="44" weight="0.023935031558352988" />
+      <edge source="Fried Foods" target="Salty Food Consumption" id="45" weight="0.045168143208218055" />
+      <edge source="Fried Foods" target="Sweet Food Consumption" id="46" weight="0.12008920556591852" />
+      <edge source="High Fat Meat" target="Processed Foods" id="47" weight="0.1979257209744459" />
+      <edge source="High Fat Meat" target="Sugar-Sweetened Beverages" id="48" weight="0.1334115258435229" />
+      <edge source="High Fat Meat" target="Additional Salt Use" id="49" weight="0.04446423714410152" />
+      <edge source="High Fat Meat" target="Salty Food Consumption" id="50" weight="0.07790708678338909" />
+      <edge source="High Fat Meat" target="Sweet Food Consumption" id="51" weight="0.0345962471411682" />
+      <edge source="Processed Foods" target="Sugar-Sweetened Beverages" id="52" weight="0.24535937531901544" />
+      <edge source="Processed Foods" target="Additional Salt Use" id="53" weight="0.056977593597937276" />
+      <edge source="Processed Foods" target="Salty Food Consumption" id="54" weight="0.059987932556213854" />
+      <edge source="Processed Foods" target="Sweet Food Consumption" id="55" weight="0.2123612814038843" />
+      <edge source="Sugar-Sweetened Beverages" target="Additional Salt Use" id="56" weight="0.08977374945128874" />
+      <edge source="Sugar-Sweetened Beverages" target="Salty Food Consumption" id="57" weight="0.0840038478322768" />
+      <edge source="Sugar-Sweetened Beverages" target="Sweet Food Consumption" id="58" weight="0.17973096146302525" />
+      <edge source="Additional Salt Use" target="Salty Food Consumption" id="59" weight="0.3968041020958058" />
+      <edge source="Additional Salt Use" target="Sweet Food Consumption" id="60" weight="0.03457122639495688" />
+    </edges>
+  </graph>
+</gexf>
