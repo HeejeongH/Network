@@ -1,0 +1,221 @@
+Group,Node 1,Node 2,Weight
+남성_청년층(19-39세)_MetS(+),Grain Products,Protein Foods,0.1492
+남성_청년층(19-39세)_MetS(+),Grain Products,Vegetables,0.1260
+남성_청년층(19-39세)_MetS(+),Protein Foods,Vegetables,0.5426
+남성_청년층(19-39세)_MetS(+),Protein Foods,Dairy Products,0.2151
+남성_청년층(19-39세)_MetS(+),Protein Foods,Fruits,0.1008
+남성_청년층(19-39세)_MetS(+),Protein Foods,Fried Foods,0.1124
+남성_청년층(19-39세)_MetS(+),Protein Foods,High Fat Meat,0.1783
+남성_청년층(19-39세)_MetS(+),Protein Foods,Processed Foods,0.1376
+남성_청년층(19-39세)_MetS(+),Protein Foods,Sugar-Sweetened Beverages,0.2481
+남성_청년층(19-39세)_MetS(+),Protein Foods,Additional Salt Use,0.0950
+남성_청년층(19-39세)_MetS(+),Protein Foods,Salty Food Consumption,0.1647
+남성_청년층(19-39세)_MetS(+),Protein Foods,Sweet Food Consumption,0.1764
+남성_청년층(19-39세)_MetS(+),Vegetables,Dairy Products,0.1764
+남성_청년층(19-39세)_MetS(+),Vegetables,Fried Foods,0.0853
+남성_청년층(19-39세)_MetS(+),Vegetables,High Fat Meat,0.1376
+남성_청년층(19-39세)_MetS(+),Vegetables,Processed Foods,0.1008
+남성_청년층(19-39세)_MetS(+),Vegetables,Sugar-Sweetened Beverages,0.1609
+남성_청년층(19-39세)_MetS(+),Vegetables,Salty Food Consumption,0.1047
+남성_청년층(19-39세)_MetS(+),Vegetables,Sweet Food Consumption,0.1163
+남성_청년층(19-39세)_MetS(+),Sugar-Sweetened Beverages,Sweet Food Consumption,0.0969
+남성_청년층(19-39세)_MetS(-),Grain Products,Protein Foods,0.1610
+남성_청년층(19-39세)_MetS(-),Grain Products,Vegetables,0.1299
+남성_청년층(19-39세)_MetS(-),Protein Foods,Vegetables,0.5599
+남성_청년층(19-39세)_MetS(-),Protein Foods,Dairy Products,0.1992
+남성_청년층(19-39세)_MetS(-),Protein Foods,Fruits,0.1049
+남성_청년층(19-39세)_MetS(-),Protein Foods,Fried Foods,0.1009
+남성_청년층(19-39세)_MetS(-),Protein Foods,High Fat Meat,0.1559
+남성_청년층(19-39세)_MetS(-),Protein Foods,Processed Foods,0.1325
+남성_청년층(19-39세)_MetS(-),Protein Foods,Sugar-Sweetened Beverages,0.2124
+남성_청년층(19-39세)_MetS(-),Protein Foods,Salty Food Consumption,0.1070
+남성_청년층(19-39세)_MetS(-),Protein Foods,Sweet Food Consumption,0.2017
+남성_청년층(19-39세)_MetS(-),Vegetables,Dairy Products,0.1630
+남성_청년층(19-39세)_MetS(-),Vegetables,Fruits,0.0897
+남성_청년층(19-39세)_MetS(-),Vegetables,Fried Foods,0.0820
+남성_청년층(19-39세)_MetS(-),Vegetables,High Fat Meat,0.1243
+남성_청년층(19-39세)_MetS(-),Vegetables,Processed Foods,0.0968
+남성_청년층(19-39세)_MetS(-),Vegetables,Sugar-Sweetened Beverages,0.1503
+남성_청년층(19-39세)_MetS(-),Vegetables,Sweet Food Consumption,0.1472
+남성_청년층(19-39세)_MetS(-),Processed Foods,Sugar-Sweetened Beverages,0.0779
+남성_청년층(19-39세)_MetS(-),Sugar-Sweetened Beverages,Sweet Food Consumption,0.0973
+남성_중년층(40-59세)_MetS(+),Grain Products,Protein Foods,0.2383
+남성_중년층(40-59세)_MetS(+),Grain Products,Vegetables,0.1991
+남성_중년층(40-59세)_MetS(+),Grain Products,Dairy Products,0.0589
+남성_중년층(40-59세)_MetS(+),Grain Products,Fruits,0.0769
+남성_중년층(40-59세)_MetS(+),Protein Foods,Vegetables,0.5735
+남성_중년층(40-59세)_MetS(+),Protein Foods,Dairy Products,0.1780
+남성_중년층(40-59세)_MetS(+),Protein Foods,Fruits,0.1937
+남성_중년층(40-59세)_MetS(+),Protein Foods,Fried Foods,0.0582
+남성_중년층(40-59세)_MetS(+),Protein Foods,High Fat Meat,0.0677
+남성_중년층(40-59세)_MetS(+),Protein Foods,Processed Foods,0.0660
+남성_중년층(40-59세)_MetS(+),Protein Foods,Sugar-Sweetened Beverages,0.0936
+남성_중년층(40-59세)_MetS(+),Protein Foods,Salty Food Consumption,0.1110
+남성_중년층(40-59세)_MetS(+),Protein Foods,Sweet Food Consumption,0.1021
+남성_중년층(40-59세)_MetS(+),Vegetables,Dairy Products,0.1603
+남성_중년층(40-59세)_MetS(+),Vegetables,Fruits,0.1767
+남성_중년층(40-59세)_MetS(+),Vegetables,High Fat Meat,0.0562
+남성_중년층(40-59세)_MetS(+),Vegetables,Sugar-Sweetened Beverages,0.0732
+남성_중년층(40-59세)_MetS(+),Vegetables,Salty Food Consumption,0.0895
+남성_중년층(40-59세)_MetS(+),Vegetables,Sweet Food Consumption,0.0820
+남성_중년층(40-59세)_MetS(+),Dairy Products,Fruits,0.0759
+남성_중년층(40-59세)_MetS(-),Grain Products,Protein Foods,0.2407
+남성_중년층(40-59세)_MetS(-),Grain Products,Vegetables,0.2122
+남성_중년층(40-59세)_MetS(-),Grain Products,Dairy Products,0.0697
+남성_중년층(40-59세)_MetS(-),Grain Products,Fruits,0.0935
+남성_중년층(40-59세)_MetS(-),Protein Foods,Vegetables,0.5964
+남성_중년층(40-59세)_MetS(-),Protein Foods,Dairy Products,0.1974
+남성_중년층(40-59세)_MetS(-),Protein Foods,Fruits,0.2347
+남성_중년층(40-59세)_MetS(-),Protein Foods,Fried Foods,0.0509
+남성_중년층(40-59세)_MetS(-),Protein Foods,High Fat Meat,0.0555
+남성_중년층(40-59세)_MetS(-),Protein Foods,Processed Foods,0.0513
+남성_중년층(40-59세)_MetS(-),Protein Foods,Sugar-Sweetened Beverages,0.0760
+남성_중년층(40-59세)_MetS(-),Protein Foods,Salty Food Consumption,0.0716
+남성_중년층(40-59세)_MetS(-),Protein Foods,Sweet Food Consumption,0.1136
+남성_중년층(40-59세)_MetS(-),Vegetables,Dairy Products,0.1828
+남성_중년층(40-59세)_MetS(-),Vegetables,Fruits,0.2155
+남성_중년층(40-59세)_MetS(-),Vegetables,High Fat Meat,0.0500
+남성_중년층(40-59세)_MetS(-),Vegetables,Sugar-Sweetened Beverages,0.0635
+남성_중년층(40-59세)_MetS(-),Vegetables,Salty Food Consumption,0.0583
+남성_중년층(40-59세)_MetS(-),Vegetables,Sweet Food Consumption,0.0929
+남성_중년층(40-59세)_MetS(-),Dairy Products,Fruits,0.0916
+남성_장년층(60-74세)_MetS(+),Grain Products,Protein Foods,0.3337
+남성_장년층(60-74세)_MetS(+),Grain Products,Vegetables,0.2863
+남성_장년층(60-74세)_MetS(+),Grain Products,Dairy Products,0.1267
+남성_장년층(60-74세)_MetS(+),Grain Products,Fruits,0.2358
+남성_장년층(60-74세)_MetS(+),Grain Products,Salty Food Consumption,0.0484
+남성_장년층(60-74세)_MetS(+),Grain Products,Sweet Food Consumption,0.0587
+남성_장년층(60-74세)_MetS(+),Protein Foods,Vegetables,0.5499
+남성_장년층(60-74세)_MetS(+),Protein Foods,Dairy Products,0.2719
+남성_장년층(60-74세)_MetS(+),Protein Foods,Fruits,0.4171
+남성_장년층(60-74세)_MetS(+),Protein Foods,Sugar-Sweetened Beverages,0.0484
+남성_장년층(60-74세)_MetS(+),Protein Foods,Salty Food Consumption,0.0855
+남성_장년층(60-74세)_MetS(+),Protein Foods,Sweet Food Consumption,0.1009
+남성_장년층(60-74세)_MetS(+),Vegetables,Dairy Products,0.2430
+남성_장년층(60-74세)_MetS(+),Vegetables,Fruits,0.3687
+남성_장년층(60-74세)_MetS(+),Vegetables,Salty Food Consumption,0.0690
+남성_장년층(60-74세)_MetS(+),Vegetables,Sweet Food Consumption,0.0824
+남성_장년층(60-74세)_MetS(+),Dairy Products,Fruits,0.2142
+남성_장년층(60-74세)_MetS(+),Dairy Products,Sweet Food Consumption,0.0525
+남성_장년층(60-74세)_MetS(+),Fruits,Salty Food Consumption,0.0505
+남성_장년층(60-74세)_MetS(+),Fruits,Sweet Food Consumption,0.0793
+남성_장년층(60-74세)_MetS(-),Grain Products,Protein Foods,0.3935
+남성_장년층(60-74세)_MetS(-),Grain Products,Vegetables,0.3516
+남성_장년층(60-74세)_MetS(-),Grain Products,Dairy Products,0.1548
+남성_장년층(60-74세)_MetS(-),Grain Products,Fruits,0.2404
+남성_장년층(60-74세)_MetS(-),Grain Products,Salty Food Consumption,0.0419
+남성_장년층(60-74세)_MetS(-),Grain Products,Sweet Food Consumption,0.0393
+남성_장년층(60-74세)_MetS(-),Protein Foods,Vegetables,0.6031
+남성_장년층(60-74세)_MetS(-),Protein Foods,Dairy Products,0.2797
+남성_장년층(60-74세)_MetS(-),Protein Foods,Fruits,0.4175
+남성_장년층(60-74세)_MetS(-),Protein Foods,Sugar-Sweetened Beverages,0.0470
+남성_장년층(60-74세)_MetS(-),Protein Foods,Salty Food Consumption,0.0727
+남성_장년층(60-74세)_MetS(-),Protein Foods,Sweet Food Consumption,0.0744
+남성_장년층(60-74세)_MetS(-),Vegetables,Dairy Products,0.2549
+남성_장년층(60-74세)_MetS(-),Vegetables,Fruits,0.3867
+남성_장년층(60-74세)_MetS(-),Vegetables,Sugar-Sweetened Beverages,0.0419
+남성_장년층(60-74세)_MetS(-),Vegetables,Salty Food Consumption,0.0607
+남성_장년층(60-74세)_MetS(-),Vegetables,Sweet Food Consumption,0.0624
+남성_장년층(60-74세)_MetS(-),Dairy Products,Fruits,0.2062
+남성_장년층(60-74세)_MetS(-),Fruits,Salty Food Consumption,0.0385
+남성_장년층(60-74세)_MetS(-),Fruits,Sweet Food Consumption,0.0573
+여성_청년층(19-39세)_MetS(-),Grain Products,Protein Foods,0.1532
+여성_청년층(19-39세)_MetS(-),Grain Products,Vegetables,0.1258
+여성_청년층(19-39세)_MetS(-),Grain Products,Sweet Food Consumption,0.0707
+여성_청년층(19-39세)_MetS(-),Protein Foods,Vegetables,0.5193
+여성_청년층(19-39세)_MetS(-),Protein Foods,Dairy Products,0.2191
+여성_청년층(19-39세)_MetS(-),Protein Foods,Fruits,0.1632
+여성_청년층(19-39세)_MetS(-),Protein Foods,Processed Foods,0.0917
+여성_청년층(19-39세)_MetS(-),Protein Foods,Sugar-Sweetened Beverages,0.1008
+여성_청년층(19-39세)_MetS(-),Protein Foods,Salty Food Consumption,0.0774
+여성_청년층(19-39세)_MetS(-),Protein Foods,Sweet Food Consumption,0.2640
+여성_청년층(19-39세)_MetS(-),Vegetables,Dairy Products,0.1782
+여성_청년층(19-39세)_MetS(-),Vegetables,Fruits,0.1405
+여성_청년층(19-39세)_MetS(-),Vegetables,Processed Foods,0.0639
+여성_청년층(19-39세)_MetS(-),Vegetables,Sugar-Sweetened Beverages,0.0703
+여성_청년층(19-39세)_MetS(-),Vegetables,Sweet Food Consumption,0.1886
+여성_청년층(19-39세)_MetS(-),Dairy Products,Fruits,0.0842
+여성_청년층(19-39세)_MetS(-),Dairy Products,Sweet Food Consumption,0.1096
+여성_청년층(19-39세)_MetS(-),Fruits,Sweet Food Consumption,0.0742
+여성_청년층(19-39세)_MetS(-),Processed Foods,Sweet Food Consumption,0.0726
+여성_청년층(19-39세)_MetS(-),Sugar-Sweetened Beverages,Sweet Food Consumption,0.0730
+여성_중년층(40-59세)_MetS(+),Grain Products,Protein Foods,0.2309
+여성_중년층(40-59세)_MetS(+),Grain Products,Vegetables,0.2084
+여성_중년층(40-59세)_MetS(+),Grain Products,Dairy Products,0.0752
+여성_중년층(40-59세)_MetS(+),Grain Products,Fruits,0.1319
+여성_중년층(40-59세)_MetS(+),Grain Products,Sweet Food Consumption,0.0541
+여성_중년층(40-59세)_MetS(+),Protein Foods,Vegetables,0.5792
+여성_중년층(40-59세)_MetS(+),Protein Foods,Dairy Products,0.2084
+여성_중년층(40-59세)_MetS(+),Protein Foods,Fruits,0.3377
+여성_중년층(40-59세)_MetS(+),Protein Foods,Fried Foods,0.0501
+여성_중년층(40-59세)_MetS(+),Protein Foods,Processed Foods,0.0528
+여성_중년층(40-59세)_MetS(+),Protein Foods,Sugar-Sweetened Beverages,0.0462
+여성_중년층(40-59세)_MetS(+),Protein Foods,Sweet Food Consumption,0.1332
+여성_중년층(40-59세)_MetS(+),Vegetables,Dairy Products,0.1900
+여성_중년층(40-59세)_MetS(+),Vegetables,Fruits,0.3100
+여성_중년층(40-59세)_MetS(+),Vegetables,Fried Foods,0.0475
+여성_중년층(40-59세)_MetS(+),Vegetables,Processed Foods,0.0475
+여성_중년층(40-59세)_MetS(+),Vegetables,Sweet Food Consumption,0.1161
+여성_중년층(40-59세)_MetS(+),Dairy Products,Fruits,0.1451
+여성_중년층(40-59세)_MetS(+),Dairy Products,Sweet Food Consumption,0.0488
+여성_중년층(40-59세)_MetS(+),Fruits,Sweet Food Consumption,0.0818
+여성_중년층(40-59세)_MetS(-),Grain Products,Protein Foods,0.2153
+여성_중년층(40-59세)_MetS(-),Grain Products,Vegetables,0.1890
+여성_중년층(40-59세)_MetS(-),Grain Products,Dairy Products,0.0719
+여성_중년층(40-59세)_MetS(-),Grain Products,Fruits,0.1363
+여성_중년층(40-59세)_MetS(-),Grain Products,Sweet Food Consumption,0.0586
+여성_중년층(40-59세)_MetS(-),Protein Foods,Vegetables,0.5813
+여성_중년층(40-59세)_MetS(-),Protein Foods,Dairy Products,0.2457
+여성_중년층(40-59세)_MetS(-),Protein Foods,Fruits,0.3619
+여성_중년층(40-59세)_MetS(-),Protein Foods,Fried Foods,0.0361
+여성_중년층(40-59세)_MetS(-),Protein Foods,Processed Foods,0.0494
+여성_중년층(40-59세)_MetS(-),Protein Foods,Salty Food Consumption,0.0394
+여성_중년층(40-59세)_MetS(-),Protein Foods,Sweet Food Consumption,0.1622
+여성_중년층(40-59세)_MetS(-),Vegetables,Dairy Products,0.2274
+여성_중년층(40-59세)_MetS(-),Vegetables,Fruits,0.3295
+여성_중년층(40-59세)_MetS(-),Vegetables,Processed Foods,0.0419
+여성_중년층(40-59세)_MetS(-),Vegetables,Salty Food Consumption,0.0350
+여성_중년층(40-59세)_MetS(-),Vegetables,Sweet Food Consumption,0.1341
+여성_중년층(40-59세)_MetS(-),Dairy Products,Fruits,0.1673
+여성_중년층(40-59세)_MetS(-),Dairy Products,Sweet Food Consumption,0.0682
+여성_중년층(40-59세)_MetS(-),Fruits,Sweet Food Consumption,0.1029
+여성_장년층(60-74세)_MetS(+),Grain Products,Protein Foods,0.2882
+여성_장년층(60-74세)_MetS(+),Grain Products,Vegetables,0.2926
+여성_장년층(60-74세)_MetS(+),Grain Products,Dairy Products,0.1603
+여성_장년층(60-74세)_MetS(+),Grain Products,Fruits,0.2500
+여성_장년층(60-74세)_MetS(+),Grain Products,Salty Food Consumption,0.0618
+여성_장년층(60-74세)_MetS(+),Grain Products,Sweet Food Consumption,0.0426
+여성_장년층(60-74세)_MetS(+),Protein Foods,Vegetables,0.5618
+여성_장년층(60-74세)_MetS(+),Protein Foods,Dairy Products,0.3412
+여성_장년층(60-74세)_MetS(+),Protein Foods,Fruits,0.4779
+여성_장년층(60-74세)_MetS(+),Protein Foods,Salty Food Consumption,0.0588
+여성_장년층(60-74세)_MetS(+),Protein Foods,Sweet Food Consumption,0.0794
+여성_장년층(60-74세)_MetS(+),Vegetables,Dairy Products,0.3206
+여성_장년층(60-74세)_MetS(+),Vegetables,Fruits,0.4412
+여성_장년층(60-74세)_MetS(+),Vegetables,Additional Salt Use,0.0368
+여성_장년층(60-74세)_MetS(+),Vegetables,Salty Food Consumption,0.0647
+여성_장년층(60-74세)_MetS(+),Vegetables,Sweet Food Consumption,0.0647
+여성_장년층(60-74세)_MetS(+),Dairy Products,Fruits,0.2941
+여성_장년층(60-74세)_MetS(+),Dairy Products,Sweet Food Consumption,0.0412
+여성_장년층(60-74세)_MetS(+),Fruits,Salty Food Consumption,0.0515
+여성_장년층(60-74세)_MetS(+),Fruits,Sweet Food Consumption,0.0765
+여성_장년층(60-74세)_MetS(-),Grain Products,Protein Foods,0.3127
+여성_장년층(60-74세)_MetS(-),Grain Products,Vegetables,0.3007
+여성_장년층(60-74세)_MetS(-),Grain Products,Dairy Products,0.1596
+여성_장년층(60-74세)_MetS(-),Grain Products,Fruits,0.2768
+여성_장년층(60-74세)_MetS(-),Grain Products,Salty Food Consumption,0.0221
+여성_장년층(60-74세)_MetS(-),Grain Products,Sweet Food Consumption,0.0489
+여성_장년층(60-74세)_MetS(-),Protein Foods,Vegetables,0.6273
+여성_장년층(60-74세)_MetS(-),Protein Foods,Dairy Products,0.3441
+여성_장년층(60-74세)_MetS(-),Protein Foods,Fruits,0.5406
+여성_장년층(60-74세)_MetS(-),Protein Foods,High Fat Meat,0.0203
+여성_장년층(60-74세)_MetS(-),Protein Foods,Salty Food Consumption,0.0424
+여성_장년층(60-74세)_MetS(-),Protein Foods,Sweet Food Consumption,0.0784
+여성_장년층(60-74세)_MetS(-),Vegetables,Dairy Products,0.3367
+여성_장년층(60-74세)_MetS(-),Vegetables,Fruits,0.5268
+여성_장년층(60-74세)_MetS(-),Vegetables,Salty Food Consumption,0.0434
+여성_장년층(60-74세)_MetS(-),Vegetables,Sweet Food Consumption,0.0701
+여성_장년층(60-74세)_MetS(-),Dairy Products,Fruits,0.3146
+여성_장년층(60-74세)_MetS(-),Dairy Products,Sweet Food Consumption,0.0480
+여성_장년층(60-74세)_MetS(-),Fruits,Salty Food Consumption,0.0378
+여성_장년층(60-74세)_MetS(-),Fruits,Sweet Food Consumption,0.0673

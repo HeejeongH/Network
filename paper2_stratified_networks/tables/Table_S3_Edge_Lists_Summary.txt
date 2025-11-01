@@ -1,0 +1,31 @@
+TABLE S3. Complete Edge Lists - Summary
+================================================================================
+
+
+남성_청년층(19-39세)_MetS(+): 20 edges
+
+남성_청년층(19-39세)_MetS(-): 20 edges
+
+남성_중년층(40-59세)_MetS(+): 20 edges
+
+남성_중년층(40-59세)_MetS(-): 20 edges
+
+남성_장년층(60-74세)_MetS(+): 20 edges
+
+남성_장년층(60-74세)_MetS(-): 20 edges
+
+여성_청년층(19-39세)_MetS(-): 20 edges
+
+여성_중년층(40-59세)_MetS(+): 20 edges
+
+여성_중년층(40-59세)_MetS(-): 20 edges
+
+여성_장년층(60-74세)_MetS(+): 20 edges
+
+여성_장년층(60-74세)_MetS(-): 20 edges
+
+
+Total edges across all groups: 220
+================================================================================
+
+Complete edge list saved in Table_S3_Edge_Lists.csv
