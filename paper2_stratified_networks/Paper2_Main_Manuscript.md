@@ -1,7 +1,7 @@
-# Dietary Network Patterns Differ Across Sex, Age, and Metabolic Syndrome Status: A Stratified Co-occurrence Network Analysis
+# Personalized Nutrition Through Dietary Network Analysis: Heterogeneity Across Sex, Age, and Metabolic Health
 
 ## Running Title
-Stratified Dietary Networks and Metabolic Syndrome
+Personalized Nutrition Through Dietary Networks
 
 ---
 
