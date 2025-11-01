@@ -1,0 +1,12 @@
+Group,N,Nodes,Edges,Density,Clustering,Avg Degree,Diameter,Top Hub 1,Top Hub 2,Top Hub 3
+남 청년 MetS(+),516,12,20,0.303,0.701,3.33,2,Protein Foods,Vegetables,Sugar-Sweetened Beverages
+남 청년 MetS(-),1963,12,20,0.303,0.694,3.33,N/A,Protein Foods,Vegetables,Sugar-Sweetened Beverages
+남 중년 MetS(+),2938,12,20,0.303,0.632,3.33,N/A,Protein Foods,Vegetables,Grain Products
+남 중년 MetS(-),4737,12,20,0.303,0.632,3.33,N/A,Protein Foods,Vegetables,Grain Products
+남 장년 MetS(+),971,12,20,0.303,0.518,3.33,N/A,Protein Foods,Grain Products,Vegetables
+남 장년 MetS(-),1169,12,20,0.303,0.570,3.33,N/A,Protein Foods,Vegetables,Grain Products
+여 청년 MetS(-),2519,12,20,0.303,0.548,3.33,N/A,Protein Foods,Vegetables,Sweet Food Consumption
+여 중년 MetS(+),758,12,20,0.303,0.583,3.33,N/A,Protein Foods,Vegetables,Grain Products
+여 중년 MetS(-),5629,12,20,0.303,0.583,3.33,N/A,Protein Foods,Vegetables,Grain Products
+여 장년 MetS(+),680,12,20,0.303,0.518,3.33,N/A,Vegetables,Grain Products,Protein Foods
+여 장년 MetS(-),1084,12,20,0.303,0.518,3.33,N/A,Protein Foods,Grain Products,Vegetables
