@@ -29,26 +29,50 @@ How do dietary network patterns differ across sex, age groups, and metabolic syn
 paper2_stratified_networks/
 │
 ├── README.md                                    # This file
-├── Supplementary_Methods.md                     # Detailed methodology
-├── Supplementary_Materials_Complete.md          # Complete supplementary materials
+├── References.md                                # Bibliography and citations
 │
-├── figures/                                     # All supplementary figures
-│   ├── Figure_S1_Network_Visualizations.png    # 11 network visualizations
-│   ├── Figure_S2_Hub_Transitions.png           # Hub transitions across ages
-│   └── Figure_S3_Centrality_Heatmaps.png       # Centrality heatmaps
-│
-├── tables/                                      # All supplementary tables
-│   ├── Table_S1_Sample_Characteristics.*       # Sample sizes and proportions
-│   ├── Table_S2_Network_Metrics.*              # Network structural metrics
-│   ├── Table_S3_Edge_Lists.*                   # Complete edge lists
-│   └── Table_S4_Centrality_Rankings.*          # Top 5 centrality rankings
-│
-├── scripts/                                     # Analysis scripts
+├── src/                                         # Source code
 │   ├── create_stratified_networks.py           # Generate 11 networks
-│   └── generate_supplementary_materials.py     # Generate figures & tables
+│   ├── generate_supplementary_materials.py     # Generate supplementary figures/tables
+│   └── generate_main_figures_tables.py         # Generate main manuscript figures/tables
 │
-└── data/                                        # Network data files
-    └── [See ../db/processed_data/network_*.gexf]
+├── db/ -> ../db                                 # Symbolic link to parent db folder
+│   └── processed_data/
+│       └── total_only_org.csv                   # Original data (N=23,040)
+│
+└── result/                                      # All analysis results
+    ├── manuscript/                              # Manuscript files
+    │   ├── Paper2_Main_Manuscript.md            # Main paper text (50 KB)
+    │   ├── Supplementary_Methods.md             # Detailed methodology
+    │   └── Supplementary_Materials_Complete.md  # Complete supplementary materials
+    │
+    ├── figures/                                 # All figures (main + supplementary)
+    │   ├── Figure_1_Representative_Networks.png          # Main Figure 1
+    │   ├── Figure_2_Hub_Centrality_Comparison.png        # Main Figure 2
+    │   ├── Figure_S1_Network_Visualizations.png          # Supplementary Figure S1
+    │   ├── Figure_S2_Hub_Transitions.png                 # Supplementary Figure S2
+    │   └── Figure_S3_Centrality_Heatmaps.png             # Supplementary Figure S3
+    │
+    ├── tables/                                  # All tables (main + supplementary)
+    │   ├── Table_1_Sample_Characteristics.*     # Main Table 1 (CSV + TXT)
+    │   ├── Table_2_Network_Metrics.*            # Main Table 2 (CSV + TXT)
+    │   ├── Table_S1_Sample_Characteristics.*    # Supplementary Table S1
+    │   ├── Table_S2_Network_Metrics.*           # Supplementary Table S2
+    │   ├── Table_S3_Edge_Lists.*                # Supplementary Table S3
+    │   └── Table_S4_Centrality_Rankings.*       # Supplementary Table S4
+    │
+    └── network_files/                           # Network data files (GEXF format)
+        ├── network_남성_청년층(19-39세)_MetS(+).gexf    # Young male MetS(+)
+        ├── network_남성_청년층(19-39세)_MetS(-).gexf    # Young male MetS(-)
+        ├── network_남성_중년층(40-59세)_MetS(+).gexf    # Middle-aged male MetS(+)
+        ├── network_남성_중년층(40-59세)_MetS(-).gexf    # Middle-aged male MetS(-)
+        ├── network_남성_장년층(60-74세)_MetS(+).gexf    # Older male MetS(+)
+        ├── network_남성_장년층(60-74세)_MetS(-).gexf    # Older male MetS(-)
+        ├── network_여성_청년층(19-39세)_MetS(-).gexf    # Young female MetS(-)
+        ├── network_여성_중년층(40-59세)_MetS(+).gexf    # Middle-aged female MetS(+)
+        ├── network_여성_중년층(40-59세)_MetS(-).gexf    # Middle-aged female MetS(-)
+        ├── network_여성_장년층(60-74세)_MetS(+).gexf    # Older female MetS(+)
+        └── network_여성_장년층(60-74세)_MetS(-).gexf    # Older female MetS(-)
 ```
 
 ---
@@ -166,23 +190,33 @@ pip install pandas numpy networkx matplotlib seaborn scipy
 ### Step 1: Create Networks
 ```bash
 cd /home/user/webapp
-python3 paper2_stratified_networks/scripts/create_stratified_networks.py
+python3 paper2_stratified_networks/src/create_stratified_networks.py
 ```
 
-**Output**: 11 GEXF network files in `db/processed_data/`
+**Output**: 11 GEXF network files in `result/network_files/`
 
-### Step 2: Generate Supplementary Materials
+### Step 2: Generate Main Figures and Tables
 ```bash
-python3 paper2_stratified_networks/scripts/generate_supplementary_materials.py
+python3 paper2_stratified_networks/src/generate_main_figures_tables.py
 ```
 
 **Output**: 
-- 3 figures in `figures/`
-- 4 tables in `tables/` (CSV and TXT formats)
+- 2 main figures in `result/figures/`
+- 2 main tables in `result/tables/` (CSV and TXT formats)
 
-### Step 3: Review Documents
-- Read `Supplementary_Methods.md` for detailed methodology
-- Read `Supplementary_Materials_Complete.md` for integrated materials
+### Step 3: Generate Supplementary Materials
+```bash
+python3 paper2_stratified_networks/src/generate_supplementary_materials.py
+```
+
+**Output**: 
+- 3 supplementary figures in `result/figures/`
+- 4 supplementary tables in `result/tables/` (CSV and TXT formats)
+
+### Step 4: Review Documents
+- Read `result/manuscript/Paper2_Main_Manuscript.md` for main paper text
+- Read `result/manuscript/Supplementary_Methods.md` for detailed methodology
+- Read `result/manuscript/Supplementary_Materials_Complete.md` for integrated materials
 
 ---
 
