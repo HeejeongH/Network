@@ -107,14 +107,17 @@ Dietary intake was assessed using a validated semi-quantitative food frequency q
 12. **Sweet Food Consumption**: Desserts, candy, sweetened snacks
 
 #### 2.3.2 Dietary Quality Scoring
-Each food group was scored on a 5-point Likert scale based on consumption frequency and adequacy:
-- 1 = Poor (rarely consumed or inadequate)
-- 2 = Fair (occasionally consumed)
-- 3 = Good (regularly consumed at recommended levels)
-- 4 = Very Good (frequently consumed above recommendations)
-- 5 = Excellent (very frequently consumed, well above recommendations)
+Each food group was scored on a 3- or 4-point scale based on consumption frequency and adequacy relative to Korean dietary guidelines. Different scales were used to accommodate the varying nature of dietary recommendations across food groups:
 
-For network analysis, scores were binarized: high consumption (score ≥3, coded as 1) vs. low consumption (score <3, coded as 0). This threshold was chosen based on dietary guideline recommendations defining "adequate" consumption [22].
+**Healthy foods** (3-point scale for 5 groups; 4-point scale for 3 groups):
+- **3-point scale** (Grain Products, Fruits, Sweet Food Consumption): 1=Poor, 2=Intermediate, 3=Ideal
+- **4-point scale** (Protein Foods, Vegetables, Dairy Products): 1=Poor, 2=Fair, 3=Good, 4=Ideal
+
+**Unhealthy foods** (lower score indicates better adherence to guidelines):
+- **4-point scale** (Fried Foods, High Fat Meat, Processed Foods, Sugar-Sweetened Beverages): 1=Ideal (rarely/never), 2=Moderate, 3=Frequent, 4=Very frequent
+- **3-point scale** (Additional Salt Use, Salty Food Consumption): 1=Ideal (never), 2=Sometimes, 3=Often
+
+For network analysis, all scores were consistently binarized: high consumption (score ≥3, coded as 1) vs. low consumption (score <3, coded as 0). This threshold (score ≥3) represents consumption at or above recommended levels for healthy foods, and frequent consumption for unhealthy foods, based on Korean Dietary Reference Intakes [22].
 
 ### 2.4 Network Construction
 

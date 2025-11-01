@@ -87,7 +87,8 @@ def create_cooccurrence_network(data, food_groups, threshold_percentile=70):
     Returns:
         NetworkX graph
     """
-    # Binarize: 1 if score >= 3 (Good/Excellent), 0 otherwise
+    # Binarize: 1 if score >= 3 (high consumption), 0 otherwise
+    # Note: Food groups use 3- or 4-point scales, but binarization threshold is consistent (>=3)
     data_binary = (data[food_groups] >= 3).astype(int)
     
     # Calculate co-occurrence matrix

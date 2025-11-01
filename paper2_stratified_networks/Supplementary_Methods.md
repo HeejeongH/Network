@@ -49,14 +49,40 @@ Dietary intake was assessed using a semi-quantitative food frequency questionnai
 12. **Sweet Food Consumption**: Desserts, candy, sweetened snacks
 
 ### Dietary Quality Scoring
-Each food group was scored on a 5-point Likert scale:
-- 1: Poor (rarely consumed)
-- 2: Fair (occasionally consumed)
-- 3: Good (regularly consumed)
-- 4: Very Good (frequently consumed)
-- 5: Excellent (very frequently consumed)
 
-For network construction, scores were binarized:
+Each food group was scored on a 3- or 4-point scale based on food group-specific dietary recommendations:
+
+**Rationale for Variable Scales**: Different food groups have different recommendation structures in Korean dietary guidelines. Some foods (e.g., grains, fruits) have clear categorical recommendations (daily, sometimes, rarely), while others (e.g., proteins, vegetables) require more granular assessment due to wider acceptable intake ranges.
+
+**Scoring Systems**:
+
+*Healthy foods (higher score = better)*:
+- **3-point scale** (5 groups: Grain Products, Fruits, Sweet Food Consumption):
+  - 1 = Poor (inadequate/rarely consumed)
+  - 2 = Intermediate (moderate consumption)
+  - 3 = Ideal (recommended level)
+
+- **4-point scale** (3 groups: Protein Foods, Vegetables, Dairy Products):
+  - 1 = Poor (rarely consumed)
+  - 2 = Fair (occasionally consumed)
+  - 3 = Good (regularly consumed)
+  - 4 = Ideal (frequently consumed)
+
+*Unhealthy foods (lower score = better)*:
+- **4-point scale** (4 groups: Fried Foods, High Fat Meat, Processed Foods, Sugar-Sweetened Beverages):
+  - 1 = Ideal (rarely/never consumed)
+  - 2 = Moderate (occasional consumption)
+  - 3 = Frequent (regular consumption)
+  - 4 = Very frequent (daily consumption)
+
+- **3-point scale** (2 groups: Additional Salt Use, Salty Food Consumption):
+  - 1 = Ideal (never)
+  - 2 = Sometimes
+  - 3 = Often
+
+**Validation**: Scoring criteria were based on Korean Dietary Reference Intakes (KDRIs) 2020 and validated by a nutritionist expert panel.
+
+For network construction, all scores were consistently binarized:
 - **High consumption**: Score ≥ 3 (coded as 1)
 - **Low consumption**: Score < 3 (coded as 0)
 
