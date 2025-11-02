@@ -14,7 +14,7 @@ warnings.filterwarnings('ignore')
 # Paths
 BASE_DIR = Path('/home/user/webapp')
 DATA_FILE = BASE_DIR / 'db' / 'processed_data' / 'total_only_org.csv'
-OUTPUT_DIR = BASE_DIR / 'db' / 'processed_data'
+OUTPUT_DIR = BASE_DIR / 'result' / 'network_files'
 
 # 12 food groups to analyze
 FOOD_GROUPS = [
