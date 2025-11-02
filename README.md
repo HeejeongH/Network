@@ -1,241 +1,134 @@
-# Dietary Network Analysis Project
+# 식이 네트워크 분석 프로젝트
 
-## 🎯 Project Versions
+## 버전 관리
 
-This repository contains multiple versions of dietary network analysis projects, organized chronologically.
+이 저장소는 식이 네트워크 분석 프로젝트의 여러 버전을 시간순으로 정리한 것입니다.
 
----
+## 프로젝트 버전
 
-## 📦 Version Overview
+### ver3.0_2511 (2025년 11월) - 현재 작업 중
 
-### ✅ **ver3.0_2511** (November 2025) - **CURRENT VERSION**
+**프로젝트**: Paper 2 - 식품 동시섭취 네트워크 분석  
+**상태**: 분석 완료, 논문 작성 중  
+**주요 결과**: 단백질, 채소, 곡류가 모든 인구집단에서 중심 식품(hub)으로 나타남
 
-**Project**: Paper 2 - Dietary Co-occurrence Network Analysis  
-**Status**: ✅ Complete, ready for submission  
-**Key Finding**: Protein Foods, Vegetables, and Grain Products are **universal hubs** across all demographic groups
+경로: `ver3.0_2511/`
 
-📁 **Path**: `ver3.0_2511/`
+포함 내용:
+- 논문 원고
+- 11개 층화 네트워크 파일
+- 그림 및 표
+- 보충 자료
+- 분석 스크립트
 
-**Contains**:
-- ✅ Complete manuscript
-- ✅ 11 stratified network files
-- ✅ Main figures and tables
-- ✅ Supplementary materials
-- ✅ Analysis scripts
+상세 내용은 `ver3.0_2511/README.md` 참고
 
-👉 **[See ver3.0_2511/README.md for full documentation](ver3.0_2511/README.md)**
+### ver2.0_2510 (2025년 10월) - 보관
 
----
+**프로젝트**: 변환 점수를 이용한 대안 분석  
+**상태**: 참고용 보관  
+**주요 결과**: 건강하지 않은 식품의 회피 패턴이 군집화됨
 
-### 📚 **ver2.0_2510** (October 2025) - ARCHIVED
+포함 내용:
+- 1-3-5 변환 점수 사용
+- 회피 패턴 네트워크
+- 원본 분석과의 비교
 
-**Project**: Alternative Analysis (Dietary Quality Scores)  
-**Status**: 📦 Archived for reference  
-**Key Finding**: Unhealthy food avoidance patterns cluster together
+참고: Paper 2와는 다른 연구 질문. 향후 별도 논문 가능성 있음.
 
-**Contains**:
-- Alternative analysis using transformed scores (1-3-5 scale)
-- Avoidance pattern networks
-- Comparison with original analysis
+### ver1.0_2509 (2025년 9월) - 보관
 
-**Note**: Different research question than Paper 2. Could be separate future publication.
+**프로젝트**: 식이-건강 통합 네트워크 분석  
+**상태**: 참고용 보관  
+**내용**: 식이 패턴과 건강 지표를 결합한 초기 탐색 분석
 
----
+## 현재 작업 시작하기
 
-### 📚 **ver1.0_2509** (September 2025) - ARCHIVED
-
-**Project**: Integrated Diet-Health Network Analysis  
-**Status**: 📦 Archived for reference  
-**Contents**: Initial exploration combining dietary patterns with health indicators
-
----
-
-## 🚀 Quick Start
-
-### For Paper 2 Work (Current):
+Paper 2 작업용 (ver3.0_2511):
 
 ```bash
 cd ver3.0_2511/
 
-# Run main analysis
+# 메인 분석 실행
 python3 src/create_stratified_networks.py
 
-# Generate figures and tables
+# 그림과 표 생성
 python3 src/generate_main_figures_tables.py
 python3 src/generate_supplementary_materials.py
-
-# Read manuscript
-cat result/manuscript/Paper2_Main_Manuscript.md
 ```
 
----
-
-## 📊 Main Research Questions by Version
-
-| Version | Research Question | Answer |
-|---------|------------------|---------|
-| **ver3.0_2511** ✅ | What foods co-occur in Korean diets? | Protein-Vegetables-Grains form universal triad |
-| ver2.0_2510 📚 | What avoidance patterns cluster? | Unhealthy food avoidances correlate |
-| ver1.0_2509 📚 | How do diet-health patterns interact? | Exploratory integrated analysis |
-
----
-
-## 🎓 Current Paper Status
-
-### Paper 2: Dietary Co-occurrence Networks (ver3.0_2511)
-
-**Title**: "Dietary Co-occurrence Network Analysis Identifies Universal Hub Foods Across Demographic Groups in Korean Adults"
-
-**Status**: 
-- ✅ Manuscript complete
-- ✅ Figures generated
-- ✅ Tables prepared
-- ✅ Supplementary materials ready
-- ⏳ Ready for journal submission
-
-**Target Journals**: 
-- Nutrients
-- Public Health Nutrition
-- Journal of Nutrition
-
-**Key Strengths**:
-- Large sample (N=23,040)
-- Novel network approach to dietary patterns
-- Stratified analysis (11 demographic groups)
-- Universal findings (protein-vegetable-grain triad)
-- Clear clinical implications
-
----
-
-## 📂 Repository Structure
+## 저장소 구조
 
 ```
 Network/
-├── README.md                    # This file
+├── README.md                    
 │
-├── ver3.0_2511/                # ⭐ CURRENT VERSION
-│   ├── README.md               # Detailed documentation
-│   ├── db/                     # Data files
-│   ├── result/                 # Manuscript, figures, tables
-│   └── src/                    # Analysis scripts
+├── ver3.0_2511/                # 현재 버전
+│   ├── README.md               
+│   ├── db/                     # 데이터 파일
+│   ├── result/                 # 논문, 그림, 표
+│   └── src/                    # 분석 스크립트
 │
-├── ver2.0_2510/                # Alternative analysis (archived)
+├── ver2.0_2510/                # 대안 분석 (보관)
 │   ├── db/
 │   ├── networks/
 │   └── src/
 │
-└── ver1.0_2509/                # Initial exploration (archived)
+└── ver1.0_2509/                # 초기 분석 (보관)
     ├── src/
     ├── result/
     └── paper/
 ```
 
----
+## 주요 방법론 (ver3.0_2511)
 
-## 🔬 Methodology Highlights
+네트워크 구축 방법:
+- 유형: 동시섭취 네트워크 (이진)
+- 임계값: 점수 ≥3 (충분한/빈번한 섭취)
+- 식품군: 12개 (건강 식품 6개 + 건강하지 않은 식품 6개)
+- 층화: 성별(2) × 연령대(3) × 대사증후군(2) = 11개 그룹
 
-### Network Construction (ver3.0_2511)
-- **Type**: Co-occurrence network (binary)
-- **Threshold**: Score ≥3 (adequate/frequent consumption)
-- **Food Groups**: 12 (6 healthy + 6 unhealthy)
-- **Stratification**: Sex (2) × Age (3) × MetS (2) = 11 groups
-  - Note: Young women with MetS(+) excluded due to small sample
+이진 분류를 사용하는 이유:
+1. 동시섭취는 명확한 yes/no 정의가 필요
+2. 다른 척도(3점, 4점)를 통일
+3. 임계값 ≥3이 임상적으로 의미 있는 기준
+4. 측정 오차에 더 강건함
 
-### Why Binary Instead of Continuous?
-1. Co-occurrence requires clear "yes/no" definition
-2. Harmonizes different scales (3-point vs 4-point)
-3. Clinical threshold (≥3) has meaningful interpretation
-4. More robust to measurement error
+## 주요 결과 (ver3.0_2511)
 
----
+모든 11개 그룹에서 공통으로 나타난 중심 식품(Universal Hub):
+1. 단백질 식품
+2. 채소
+3. 곡류
 
-## 📈 Key Findings (ver3.0_2511)
+집단별로 다르게 나타난 중심 식품:
+- 단 음식: 여성에서 더 두드러짐
+- 유제품: 연령과 대사증후군 여부에 따라 다름
+- 가공식품: 인구집단별로 다름
 
-### Universal Hub Foods (All 11 Groups)
-1. 🍖 **Protein Foods** - Central to dietary patterns
-2. 🥦 **Vegetables** - Universal connector
-3. 🍚 **Grain Products** - Foundational food
+임상적 의미:
+식이 중재는 단백질-채소-곡류 조합에 집중하는 것이 좋음. 모든 인구집단에 적용 가능하고, "이것을 더 먹으세요"라는 긍정적 메시지로 전달할 수 있으며, 의료진이 활용하기 쉬운 명확한 지침임.
 
-### Variable Hub Foods (Demographic-Specific)
-- **Sweet foods**: More prominent in women
-- **Dairy products**: Varies by age and MetS status
-- **Processed foods**: Varies by demographic group
+## Git 사용
 
-### Clinical Implications
-✅ **Dietary interventions should focus on the protein-vegetable-grain triad**
-- Universal applicability across all demographic groups
-- Positive framing ("eat more of these")
-- Clear, actionable guidance for healthcare providers
-- Aligns with existing dietary guidelines
-
----
-
-## 🛠️ Technical Requirements
-
-### Python Environment
-```bash
-# Required packages
-pandas>=1.5.0
-numpy>=1.23.0
-networkx>=2.8.0
-matplotlib>=3.5.0
-seaborn>=0.12.0
-```
-
-### Data Files
-- Main dataset: `ver3.0_2511/db/processed_data/total_only_org.csv` (5.4 MB)
-- Network outputs: `ver3.0_2511/result/network_files/*.gexf`
-
----
-
-## 📝 Citation
-
-If using this work, please cite:
-
-**[Manuscript in preparation]**  
-"Dietary Co-occurrence Network Analysis Identifies Universal Hub Foods Across Demographic Groups in Korean Adults"
-
----
-
-## 📧 Contact & Contributions
-
-For questions or collaborations:
-- Check version-specific README files
-- Review manuscript in `ver3.0_2511/result/manuscript/`
-- Examine analysis code in `ver3.0_2511/src/`
-
----
-
-## 🔄 Git Workflow
-
-### Cloning the Repository
+저장소 받기:
 ```bash
 git clone https://github.com/HeejeongH/Network.git
 cd Network
 ```
 
-### Updating to Latest Version
+최신 버전으로 업데이트:
 ```bash
 git pull origin main
 ```
 
-### Working with ver3.0_2511
+ver3.0_2511에서 작업:
 ```bash
 cd ver3.0_2511/
-# All current work happens here
 ```
 
 ---
 
-## 📚 Documentation
-
-- **Main README**: This file (repository overview)
-- **Version README**: `ver3.0_2511/README.md` (detailed current project)
-- **Manuscript**: `ver3.0_2511/result/manuscript/Paper2_Main_Manuscript.md`
-- **Methods**: `ver3.0_2511/result/manuscript/Supplementary_Methods.md`
-
----
-
-**Repository Created**: September 2025  
-**Last Updated**: November 2, 2025  
-**Current Status**: Paper 2 complete, ready for submission ✅
+생성일: 2025년 9월  
+최근 업데이트: 2025년 11월 2일  
+현재 상태: Paper 2 분석 완료
