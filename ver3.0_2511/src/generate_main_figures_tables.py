@@ -179,6 +179,8 @@ def generate_figure_1():
     fig, axes = plt.subplots(2, 2, figsize=(14, 14))
     axes = axes.flatten()
     
+    last_nodes = None  # Store the last nodes collection for colorbar
+    
     for idx, (sex, age_group, mets_status) in enumerate(KEY_GROUPS):
         ax = axes[idx]
         G = load_network(sex, age_group, mets_status)
@@ -213,6 +215,7 @@ def generate_figure_1():
             edgecolors='black',
             linewidths=1.5
         )
+        last_nodes = nodes  # Save for colorbar
         
         # Draw labels
         nx.draw_networkx_labels(G, pos, ax=ax, font_size=8, font_weight='bold')
@@ -233,18 +236,10 @@ def generate_figure_1():
         ax.set_title(title, fontsize=10, fontweight='bold', pad=10)
         ax.axis('off')
     
-    # Add colorbar
-    cbar = plt.colorbar(nodes, ax=axes, fraction=0.02, pad=0.02)
-    cbar.set_label('Degree Centrality', fontsize=11)
-    
-    plt.suptitle(
-        'Figure 1. Representative Dietary Network Patterns Across Demographic and Metabolic Subgroups\n'
-        'Force-directed layout showing food group co-occurrence patterns. '
-        'Node size represents degree, color intensity represents centrality.',
-        fontsize=13,
-        fontweight='bold',
-        y=0.98
-    )
+    # Add colorbar (using last nodes collection)
+    if last_nodes is not None:
+        cbar = plt.colorbar(last_nodes, ax=axes, fraction=0.02, pad=0.02)
+        cbar.set_label('Degree Centrality', fontsize=11)
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_1_Representative_Networks.png'
