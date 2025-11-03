@@ -18,9 +18,10 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Set up paths
-BASE_DIR = Path('/home/user/webapp')
+BASE_DIR = Path('/home/user/webapp/ver3.0_2511')
+NETWORK_DIR = BASE_DIR / 'result' / 'network_files'
 DATA_DIR = BASE_DIR / 'db' / 'processed_data'
-OUTPUT_DIR = BASE_DIR / 'paper2_stratified_networks'
+OUTPUT_DIR = Path('/home/user/webapp/paper2_stratified_networks')
 FIGURES_DIR = OUTPUT_DIR / 'figures'
 TABLES_DIR = OUTPUT_DIR / 'tables'
 
@@ -65,7 +66,7 @@ GROUP_LABELS = [
 def load_network_file(sex, age_group, mets_status):
     """Load GEXF network file for specific group"""
     filename = f"network_{sex}_{age_group}_{mets_status}.gexf"
-    filepath = DATA_DIR / filename
+    filepath = NETWORK_DIR / filename
     
     if filepath.exists():
         return nx.read_gexf(str(filepath))
@@ -90,6 +91,8 @@ def generate_figure_s1():
     
     fig, axes = plt.subplots(4, 3, figsize=(18, 24))
     axes = axes.flatten()
+    
+    last_nodes = None  # Store last nodes collection for colorbar
     
     for idx, (sex, age_group, mets_status) in enumerate(GROUPS):
         ax = axes[idx]
@@ -121,8 +124,11 @@ def generate_figure_s1():
             node_color=node_colors,
             cmap='YlOrRd',
             vmin=0, vmax=1,
-            alpha=0.8
+            alpha=0.8,
+            edgecolors='black',
+            linewidths=1.5
         )
+        last_nodes = nodes  # Save for colorbar
         
         # Draw labels
         nx.draw_networkx_labels(G, pos, ax=ax, font_size=6, font_weight='bold')
@@ -144,17 +150,10 @@ def generate_figure_s1():
     for idx in range(len(GROUPS), len(axes)):
         axes[idx].axis('off')
     
-    # Add colorbar
-    cbar = plt.colorbar(nodes, ax=axes[-1], fraction=0.046, pad=0.04)
-    cbar.set_label('Degree Centrality', fontsize=10)
-    
-    plt.suptitle(
-        'Figure S1. Network Visualizations of 11 Stratified Groups\n'
-        'Force-directed layout showing food group relationships',
-        fontsize=14,
-        fontweight='bold',
-        y=0.995
-    )
+    # Add colorbar (using last nodes collection)
+    if last_nodes is not None:
+        cbar = plt.colorbar(last_nodes, ax=axes[-1], fraction=0.046, pad=0.04)
+        cbar.set_label('Degree Centrality', fontsize=10)
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_S1_Network_Visualizations.png'
@@ -246,13 +245,6 @@ def generate_figure_s2():
         ax.set_title(f"{sex} - {mets}", fontsize=12, fontweight='bold')
         ax.axis('off')
     
-    plt.suptitle(
-        'Figure S2. Hub Transition Flowcharts Across Age Groups\n'
-        'Top 3 hub foods and network metrics for each stratified group',
-        fontsize=14,
-        fontweight='bold'
-    )
-    
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_S2_Hub_Transitions.png'
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
@@ -330,13 +322,6 @@ def generate_figure_s3():
         # Rotate x labels
         ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right', fontsize=8)
         ax.set_yticklabels(ax.get_yticklabels(), rotation=0, fontsize=9)
-    
-    plt.suptitle(
-        'Figure S3. Centrality Heatmaps Across All Stratified Groups\n'
-        'Degree, Betweenness, and Closeness centrality for 12 food groups',
-        fontsize=16,
-        fontweight='bold'
-    )
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_S3_Centrality_Heatmaps.png'

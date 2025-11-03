@@ -220,7 +220,7 @@ def generate_figure_1():
         # Draw labels
         nx.draw_networkx_labels(G, pos, ax=ax, font_size=8, font_weight='bold')
         
-        # Title with metrics
+        # Panel info text (inside panel, top-left)
         n_nodes = G.number_of_nodes()
         n_edges = G.number_of_edges()
         density = nx.density(G)
@@ -229,11 +229,15 @@ def generate_figure_1():
         top_hubs = sorted(centrality.items(), key=lambda x: x[1], reverse=True)[:3]
         hub_names = ', '.join([h[0] for h in top_hubs])
         
-        title = f"{KEY_GROUP_LABELS[idx]}\n"
-        title += f"Nodes={n_nodes}, Edges={n_edges}, Density={density:.3f}\n"
-        title += f"Top hubs: {hub_names}"
+        info_text = f"{KEY_GROUP_LABELS[idx]}\n"
+        info_text += f"Nodes={n_nodes}, Edges={n_edges}, Density={density:.3f}\n"
+        info_text += f"Top hubs: {hub_names}"
         
-        ax.set_title(title, fontsize=10, fontweight='bold', pad=10)
+        # Add text inside panel at top-left
+        ax.text(0.02, 0.98, info_text, transform=ax.transAxes,
+                fontsize=9, fontweight='bold', verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+        
         ax.axis('off')
     
     # Add colorbar (using last nodes collection)
@@ -346,14 +350,6 @@ def generate_figure_2():
     ax2.legend(loc='upper left', fontsize=10, framealpha=0.9)
     ax2.grid(axis='y', alpha=0.3, linestyle='--')
     ax2.set_ylim(0, 1.1)
-    
-    plt.suptitle(
-        'Figure 2. Hub Food Centrality Patterns Across Stratified Groups\n'
-        'Degree centrality for key food groups in 11 demographic-metabolic subgroups',
-        fontsize=13,
-        fontweight='bold',
-        y=0.99
-    )
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_2_Hub_Centrality_Comparison.png'
