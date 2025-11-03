@@ -221,7 +221,7 @@ def generate_figure_1():
         # Draw labels
         nx.draw_networkx_labels(G, pos, ax=ax, font_size=8, font_weight='bold')
         
-        # Panel info text (inside panel, top-left)
+        # Panel info text (inside panel, top-left) - no box, just text
         n_nodes = G.number_of_nodes()
         n_edges = G.number_of_edges()
         density = nx.density(G)
@@ -234,11 +234,10 @@ def generate_figure_1():
         info_text += f"Nodes={n_nodes}, Edges={n_edges}, Density={density:.3f}\n"
         info_text += f"Top hubs: {hub_names}"
         
-        # Add text inside panel at top-left with better visibility
-        ax.text(0.03, 0.97, info_text, transform=ax.transAxes,
-                fontsize=8, fontweight='bold', verticalalignment='top',
-                bbox=dict(boxstyle='round,pad=0.5', facecolor='white', 
-                         alpha=0.95, edgecolor='gray', linewidth=1))
+        # Add text directly on the plot without background box
+        ax.text(0.02, 0.98, info_text, transform=ax.transAxes,
+                fontsize=7, fontweight='bold', verticalalignment='top',
+                color='black')
         
         ax.axis('off')
     
