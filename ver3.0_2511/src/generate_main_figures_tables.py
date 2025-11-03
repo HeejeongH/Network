@@ -234,10 +234,11 @@ def generate_figure_1():
         info_text += f"Nodes={n_nodes}, Edges={n_edges}, Density={density:.3f}\n"
         info_text += f"Top hubs: {hub_names}"
         
-        # Add text inside panel at top-left
-        ax.text(0.02, 0.98, info_text, transform=ax.transAxes,
-                fontsize=9, fontweight='bold', verticalalignment='top',
-                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+        # Add text inside panel at top-left with better visibility
+        ax.text(0.03, 0.97, info_text, transform=ax.transAxes,
+                fontsize=8, fontweight='bold', verticalalignment='top',
+                bbox=dict(boxstyle='round,pad=0.5', facecolor='white', 
+                         alpha=0.95, edgecolor='gray', linewidth=1))
         
         ax.axis('off')
     
