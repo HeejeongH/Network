@@ -221,22 +221,11 @@ def generate_figure_1():
         # Draw labels
         nx.draw_networkx_labels(G, pos, ax=ax, font_size=8, font_weight='bold')
         
-        # Panel info text (inside panel, top-left) - no box, just text
-        n_nodes = G.number_of_nodes()
-        n_edges = G.number_of_edges()
-        density = nx.density(G)
-        
-        # Get top 3 hubs
-        top_hubs = sorted(centrality.items(), key=lambda x: x[1], reverse=True)[:3]
-        hub_names = ', '.join([h[0] for h in top_hubs])
-        
-        info_text = f"{KEY_GROUP_LABELS[idx]}\n"
-        info_text += f"Nodes={n_nodes}, Edges={n_edges}, Density={density:.3f}\n"
-        info_text += f"Top hubs: {hub_names}"
-        
-        # Add text directly on the plot without background box
-        ax.text(0.02, 0.98, info_text, transform=ax.transAxes,
-                fontsize=7, fontweight='bold', verticalalignment='top',
+        # Panel title (centered at top) - only title, no description
+        # Add title centered at the top
+        ax.text(0.5, 0.98, KEY_GROUP_LABELS[idx], transform=ax.transAxes,
+                fontsize=10, fontweight='bold', 
+                horizontalalignment='center', verticalalignment='top',
                 color='black')
         
         ax.axis('off')
