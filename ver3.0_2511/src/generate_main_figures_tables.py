@@ -17,9 +17,10 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Paths
-BASE_DIR = Path('/home/user/webapp')
+BASE_DIR = Path('/home/user/webapp/ver3.0_2511')
+NETWORK_DIR = BASE_DIR / 'result' / 'network_files'
 DATA_DIR = BASE_DIR / 'db' / 'processed_data'
-OUTPUT_DIR = BASE_DIR / 'paper2_stratified_networks'
+OUTPUT_DIR = Path('/home/user/webapp/paper2_stratified_networks')
 FIGURES_DIR = OUTPUT_DIR / 'main_figures'
 TABLES_DIR = OUTPUT_DIR / 'main_tables'
 
@@ -52,7 +53,7 @@ KEY_GROUP_LABELS = [
 def load_network(sex, age_group, mets_status):
     """Load network file"""
     filename = f"network_{sex}_{age_group}_{mets_status}.gexf"
-    filepath = DATA_DIR / filename
+    filepath = NETWORK_DIR / filename
     if filepath.exists():
         return nx.read_gexf(str(filepath))
     return None
