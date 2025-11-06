@@ -1,0 +1,13 @@
+Table 2. Hub Food Frequency Across 11 Stratified Groups
+==========================================================================================
+               Food Group  Hub Appearances (Top-3)  Frequency (%) Universal Status
+          Processed Foods                       10           90.9    Universal Hub
+              Fried Foods                        9           81.8    Universal Hub
+            Protein Foods                        8           72.7     Moderate Hub
+            High Fat Meat                        2           18.2   Group-Specific
+               Vegetables                        2           18.2   Group-Specific
+Sugar-Sweetened Beverages                        1            9.1   Group-Specific
+   Sweet Food Consumption                        1            9.1   Group-Specific
+==========================================================================================
+
+Universal Hubs (≥9/11 groups): Processed Foods, Fried Foods
