@@ -1,0 +1,11 @@
+Rank,Food Group 1,Food Group 2,Mean |ρ|,Range,Groups Present
+1,Protein Foods,Vegetables,0.318,0.23-0.39,11/11
+2,Additional Salt Use,Salty Food Consumption,0.222,0.14-0.30,11/11
+3,Fried Foods,High Fat Meat,0.166,0.07-0.23,11/11
+4,Fried Foods,Processed Foods,0.143,0.07-0.21,11/11
+5,Processed Foods,Sugar-Sweetened Beverages,0.116,0.02-0.18,11/11
+6,High Fat Meat,Processed Foods,0.1,0.03-0.17,10/11
+7,Grain Products,Protein Foods,0.098,0.02-0.17,11/11
+8,Sugar-Sweetened Beverages,Sweet Food Consumption,0.098,0.02-0.16,9/11
+9,Processed Foods,Sweet Food Consumption,0.09,0.03-0.13,10/11
+10,Dairy Products,Fruits,0.078,0.02-0.15,11/11
