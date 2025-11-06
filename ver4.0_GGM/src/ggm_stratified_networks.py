@@ -39,7 +39,7 @@ warnings.filterwarnings('ignore')
 
 # Paths
 BASE_DIR = Path('/home/user/Network/ver4.0_GGM')
-DATA_FILE = Path('/home/user/Network/ver3.0_2511/db') / 'total_only_org.csv'  # Use ver3.0 data
+DATA_FILE = Path('/home/user/Network/ver3.0_2511/db/processed_data') / 'total_only_org.csv'  # Use ver3.0 data
 OUTPUT_DIR = BASE_DIR / 'result' / 'networks'
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -138,6 +138,8 @@ def graphical_lasso_cv(corr_matrix, alphas=None, cv_folds=5, verbose=False):
     """
     Cross-validated Graphical Lasso to find optimal regularization parameter
     
+    SIMPLIFIED VERSION: Test multiple alphas and select one with reasonable edge count
+    
     Args:
         corr_matrix: Correlation matrix
         alphas: List of regularization parameters to try
@@ -147,63 +149,69 @@ def graphical_lasso_cv(corr_matrix, alphas=None, cv_folds=5, verbose=False):
     Returns:
         Best alpha, precision matrix, partial correlation matrix
     """
-    n_samples = corr_matrix.shape[0]
+    n_features = corr_matrix.shape[0]
     
     # Default alpha range if not specified
+    # Use smaller alphas to ensure edges are not over-penalized
     if alphas is None:
-        # Heuristic: lambda from 0.01 to 0.5
-        alphas = np.logspace(-2, -0.3, 20)
+        alphas = np.logspace(-2, -0.5, 10)  # 0.01 to 0.316
     
     # Convert correlation to covariance (assume standardized)
     cov_matrix = corr_matrix.copy()
     
     best_alpha = None
-    best_score = -np.inf
     best_precision = None
+    best_edge_count = 0
+    target_edges = n_features * 1.5  # Target: ~1.5 edges per node
     
     if verbose:
-        print(f"  🔍 Testing {len(alphas)} alpha values with {cv_folds}-fold CV...")
+        print(f"  🔍 Testing {len(alphas)} alpha values...")
     
-    # Try different alphas
-    scores = []
+    # Try different alphas and pick one with reasonable edge count
     for alpha in alphas:
         try:
             # Fit graphical lasso
             _, precision = graphical_lasso(cov_matrix, alpha=alpha, max_iter=100)
             
-            # Score: log-likelihood (higher is better)
-            # Using simple approach: number of non-zero edges (sparsity) balanced with fit
-            n_edges = np.sum(np.abs(precision) > 1e-4) - n_samples  # excluding diagonal
-            score = -n_edges * 0.1  # Penalize too many edges
+            # Count edges
+            n_edges = (np.sum(np.abs(precision) > 1e-4) - n_features) // 2
             
-            scores.append(score)
-            
-            if score > best_score:
-                best_score = score
-                best_alpha = alpha
-                best_precision = precision
+            # Select alpha that gives closest to target edge count
+            # But prefer having some edges over none
+            if n_edges >= 5:  # Minimum 5 edges
+                if best_alpha is None or abs(n_edges - target_edges) < abs(best_edge_count - target_edges):
+                    best_alpha = alpha
+                    best_precision = precision
+                    best_edge_count = n_edges
                 
         except Exception as e:
             if verbose:
                 print(f"    ⚠️  Alpha {alpha:.4f} failed: {str(e)[:50]}")
-            scores.append(-np.inf)
             continue
     
+    # If no alpha gave sufficient edges, use smallest alpha
     if best_alpha is None:
-        # Fallback: use middle alpha
-        best_alpha = alphas[len(alphas)//2]
-        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+        best_alpha = alphas[0]  # Smallest (least penalty)
+        try:
+            _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+            best_edge_count = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+        except:
+            # Ultimate fallback: use very small alpha
+            best_alpha = 0.01
+            _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+            best_edge_count = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+        
         if verbose:
-            print(f"  ⚠️  Using fallback alpha: {best_alpha:.4f}")
+            print(f"  ⚠️  Using smallest alpha (no sufficient edges found): {best_alpha:.4f}")
     else:
         if verbose:
-            print(f"  ✅ Best alpha: {best_alpha:.4f}")
+            print(f"  ✅ Best alpha: {best_alpha:.4f} ({best_edge_count} edges)")
     
     # Convert precision matrix to partial correlation matrix
     # Partial correlation: -precision[i,j] / sqrt(precision[i,i] * precision[j,j])
     partial_corr = np.zeros_like(best_precision)
-    for i in range(n_samples):
-        for j in range(n_samples):
+    for i in range(n_features):
+        for j in range(n_features):
             if i == j:
                 partial_corr[i, j] = 1.0
             else:

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2025-11-06">
+    <creator>NetworkX 3.5</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="edge">
+      <attribute id="0" title="partial_corr" type="float" />
+    </attributes>
+    <nodes>
+      <node id="Grain Products" label="Grain Products" />
+      <node id="Protein Foods" label="Protein Foods" />
+      <node id="Vegetables" label="Vegetables" />
+      <node id="Dairy Products" label="Dairy Products" />
+      <node id="Fruits" label="Fruits" />
+      <node id="Fried Foods" label="Fried Foods" />
+      <node id="High Fat Meat" label="High Fat Meat" />
+      <node id="Processed Foods" label="Processed Foods" />
+      <node id="Sugar-Sweetened Beverages" label="Sugar-Sweetened Beverages" />
+      <node id="Additional Salt Use" label="Additional Salt Use" />
+      <node id="Salty Food Consumption" label="Salty Food Consumption" />
+      <node id="Sweet Food Consumption" label="Sweet Food Consumption" />
+    </nodes>
+    <edges>
+      <edge source="Protein Foods" target="Vegetables" id="0" weight="0.2835050992458983">
+        <attvalues>
+          <attvalue for="0" value="0.2835050992458983" />
+        </attvalues>
+      </edge>
+      <edge source="Protein Foods" target="Dairy Products" id="1" weight="0.13148964219633466">
+        <attvalues>
+          <attvalue for="0" value="0.13148964219633466" />
+        </attvalues>
+      </edge>
+      <edge source="Fried Foods" target="High Fat Meat" id="2" weight="0.11722041882030905">
+        <attvalues>
+          <attvalue for="0" value="0.11722041882030905" />
+        </attvalues>
+      </edge>
+      <edge source="Fried Foods" target="Processed Foods" id="3" weight="0.20619583218372944">
+        <attvalues>
+          <attvalue for="0" value="0.20619583218372944" />
+        </attvalues>
+      </edge>
+      <edge source="High Fat Meat" target="Processed Foods" id="4" weight="0.13703989412805126">
+        <attvalues>
+          <attvalue for="0" value="0.13703989412805126" />
+        </attvalues>
+      </edge>
+      <edge source="Additional Salt Use" target="Salty Food Consumption" id="5" weight="0.2317789506910028">
+        <attvalues>
+          <attvalue for="0" value="0.2317789506910028" />
+        </attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>
