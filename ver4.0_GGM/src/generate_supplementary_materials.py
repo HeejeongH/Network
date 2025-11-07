@@ -101,6 +101,20 @@ def generate_figure_s1():
     axes = axes.flatten()
     
     last_nodes = None  # Store last nodes collection for colorbar
+    all_centralities = []  # Collect all centrality values
+    
+    # First pass: collect all centrality values
+    for sex, age_group, mets_status in GROUPS:
+        G = load_network_file(sex, age_group, mets_status)
+        if G is not None and G.number_of_nodes() > 0:
+            centrality = nx.degree_centrality(G)
+            all_centralities.extend(centrality.values())
+    
+    # Calculate vmin/vmax from actual data
+    vmin = min(all_centralities) if all_centralities else 0
+    vmax = max(all_centralities) if all_centralities else 1
+    
+    print(f"  📊 Centrality range: {vmin:.3f} - {vmax:.3f}")
     
     for idx, (sex, age_group, mets_status) in enumerate(GROUPS):
         ax = axes[idx]
@@ -134,13 +148,13 @@ def generate_figure_s1():
                 edge_color='gray'
             )
         
-        # Draw nodes
+        # Draw nodes with adjusted vmin/vmax
         nodes = nx.draw_networkx_nodes(
             G, pos, ax=ax,
             node_size=node_sizes,
             node_color=node_colors,
             cmap='YlOrRd',
-            vmin=0, vmax=1,
+            vmin=vmin, vmax=vmax,  # Use actual data range
             alpha=0.8,
             edgecolors='black',
             linewidths=1.5
