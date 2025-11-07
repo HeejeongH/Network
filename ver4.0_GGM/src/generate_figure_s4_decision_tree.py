@@ -305,7 +305,7 @@ def generate_figure_s4():
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_S4_Clinical_Decision_Tree_GGM.png'
-    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     print(f"✅ Saved: {output_file}")
     print(f"   File size: {output_file.stat().st_size / 1024:.1f} KB")
     plt.close()

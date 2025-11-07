@@ -260,7 +260,7 @@ def generate_figure_1():
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_1_Representative_Networks_GGM.png'
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     print(f"✅ Saved: {output_file}")
     plt.close()
 
@@ -338,7 +338,7 @@ def generate_figure_2():
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_2_Hub_Centrality_Comparison_GGM.png'
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     print(f"✅ Saved: {output_file}")
     plt.close()
 

@@ -188,7 +188,7 @@ def generate_figure_s1():
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_S1_Network_Visualizations_GGM.png'
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     print(f"✅ Saved: {output_file}")
     plt.close()
 
@@ -278,7 +278,7 @@ def generate_figure_s2():
     
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_S2_Hub_Transitions_GGM.png'
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     print(f"✅ Saved: {output_file}")
     plt.close()
 
@@ -339,7 +339,7 @@ def generate_figure_s3():
     plt.suptitle('Partial Correlation Matrices (GGM)', fontsize=14, fontweight='bold', y=1.00)
     plt.tight_layout()
     output_file = FIGURES_DIR / 'Figure_S3_Partial_Correlation_Heatmaps_GGM.png'
-    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     print(f"✅ Saved: {output_file}")
     plt.close()
 

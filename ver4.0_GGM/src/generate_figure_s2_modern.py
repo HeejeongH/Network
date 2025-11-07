@@ -224,7 +224,7 @@ def generate_modern_figure_s2():
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     
     output_file = FIGURES_DIR / 'Figure_S2_Hub_Transitions_GGM.png'
-    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     print(f"✅ Saved: {output_file}")
     print(f"   File size: {output_file.stat().st_size / 1024:.1f} KB")
     plt.close()
