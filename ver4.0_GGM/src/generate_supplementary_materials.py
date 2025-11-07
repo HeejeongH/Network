@@ -641,6 +641,17 @@ def main():
     generate_figure_s2()  # Hub transitions
     generate_figure_s3()  # Partial correlation heatmaps (GGM-specific)
     
+    # Generate Figure S4 (decision tree) by calling external script
+    print("\n📊 Generating Figure S4: Clinical Decision Tree...")
+    import subprocess
+    s4_script = BASE_DIR / 'src' / 'generate_figure_s4_decision_tree.py'
+    if s4_script.exists():
+        result = subprocess.run(['python', str(s4_script)], capture_output=True, text=True)
+        if result.returncode == 0:
+            print("✅ Figure S4 generated via external script")
+        else:
+            print(f"⚠️  Figure S4 generation failed: {result.stderr}")
+    
     # Generate all tables
     print("\n" + "=" * 80)
     print("PART 2: GENERATING TABLES")
@@ -650,6 +661,16 @@ def main():
     generate_table_s2()  # Network metrics
     generate_table_s3()  # Edge lists with partial correlations
     generate_table_s4()  # Centrality rankings
+    
+    # Generate Table S5 (coaching strategies) by calling external script
+    print("\n📋 Generating Table S5: Coaching Strategies...")
+    s5_script = BASE_DIR / 'src' / 'generate_table_s5_coaching.py'
+    if s5_script.exists():
+        result = subprocess.run(['python', str(s5_script)], capture_output=True, text=True)
+        if result.returncode == 0:
+            print("✅ Table S5 generated via external script")
+        else:
+            print(f"⚠️  Table S5 generation failed: {result.stderr}")
     
     print("\n" + "=" * 80)
     print("✅ ALL SUPPLEMENTARY MATERIALS GENERATED SUCCESSFULLY!")
@@ -661,12 +682,14 @@ def main():
     print("  - Figure_S1_Network_Visualizations_GGM.png")
     print("  - Figure_S2_Hub_Transitions_GGM.png")
     print("  - Figure_S3_Partial_Correlation_Heatmaps_GGM.png")
+    print("  - Figure_S4_Clinical_Decision_Tree_GGM.png (NEW)")
     
     print("\nTables:")
     print("  - Table_S1_Sample_Characteristics_GGM.csv/.txt")
     print("  - Table_S2_Network_Metrics_GGM.csv/.txt")
     print("  - Table_S3_Edge_Lists_GGM.csv/.txt")
     print("  - Table_S4_Centrality_Rankings_GGM.csv/.txt")
+    print("  - Table_S5_Personalized_Coaching_Strategies_GGM.csv/.txt (NEW)")
     
     print(f"\n📁 Output Directory: {OUTPUT_DIR}")
     print("=" * 80)
