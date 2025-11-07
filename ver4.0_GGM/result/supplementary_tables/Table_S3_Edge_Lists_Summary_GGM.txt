@@ -1,0 +1,32 @@
+TABLE S3. Complete Edge Lists with Partial Correlations (GGM) - Summary
+================================================================================
+
+
+남성_청년층(19-39세)_MetS(+): 8 edges
+
+남성_청년층(19-39세)_MetS(-): 9 edges
+
+남성_중년층(40-59세)_MetS(+): 8 edges
+
+남성_중년층(40-59세)_MetS(-): 7 edges
+
+남성_장년층(60-74세)_MetS(+): 6 edges
+
+남성_장년층(60-74세)_MetS(-): 6 edges
+
+여성_청년층(19-39세)_MetS(-): 5 edges
+
+여성_중년층(40-59세)_MetS(+): 7 edges
+
+여성_중년층(40-59세)_MetS(-): 7 edges
+
+여성_장년층(60-74세)_MetS(+): 6 edges
+
+여성_장년층(60-74세)_MetS(-): 3 edges
+
+
+Total edges across all groups: 72
+================================================================================
+
+Note: Partial correlations estimated using Graphical Lasso
+Complete edge list saved in Table_S3_Edge_Lists_GGM.csv
