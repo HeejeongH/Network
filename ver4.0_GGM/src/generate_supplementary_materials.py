@@ -638,7 +638,21 @@ def main():
     print("=" * 80)
     
     generate_figure_s1()  # Network visualizations
-    generate_figure_s2()  # Hub transitions
+    
+    # Generate Figure S2 (modern hub transitions) by calling external script
+    print("\n📊 Generating Figure S2: Modern Hub Transitions...")
+    import subprocess
+    s2_script = BASE_DIR / 'src' / 'generate_figure_s2_modern.py'
+    if s2_script.exists():
+        result = subprocess.run(['python', str(s2_script)], capture_output=True, text=True)
+        if result.returncode == 0:
+            print("✅ Figure S2 generated via external script")
+        else:
+            print(f"⚠️  Figure S2 generation failed, using fallback")
+            generate_figure_s2()  # Fallback to original
+    else:
+        generate_figure_s2()  # Hub transitions (original)
+    
     generate_figure_s3()  # Partial correlation heatmaps (GGM-specific)
     
     # Generate Figure S4 (decision tree) by calling external script
