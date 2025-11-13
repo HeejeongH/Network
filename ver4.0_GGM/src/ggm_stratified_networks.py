@@ -134,81 +134,105 @@ def spearman_correlation_matrix(data):
     
     return corr_matrix
 
-def graphical_lasso_cv(corr_matrix, alphas=None, cv_folds=5, verbose=False):
+def graphical_lasso_cv_loglik(X, corr_matrix, alphas=None, cv_folds=5, verbose=False):
     """
-    Cross-validated Graphical Lasso to find optimal regularization parameter
+    5-fold Cross-validated Graphical Lasso using log-likelihood
     
-    SIMPLIFIED VERSION: Test multiple alphas and select one with reasonable edge count
+    TRUE CV VERSION: Splits data, trains on training set, evaluates on test set
     
     Args:
-        corr_matrix: Correlation matrix
+        X: Original data matrix (n_samples, n_features)
+        corr_matrix: Full correlation matrix (for final model fitting)
         alphas: List of regularization parameters to try
-        cv_folds: Number of CV folds
+        cv_folds: Number of CV folds (default: 5)
         verbose: Print progress
     
     Returns:
         Best alpha, precision matrix, partial correlation matrix
     """
-    n_features = corr_matrix.shape[0]
+    n_samples, n_features = X.shape
     
     # Default alpha range if not specified
-    # Use smaller alphas to ensure edges are not over-penalized
     if alphas is None:
-        alphas = np.logspace(-2, -0.5, 10)  # 0.01 to 0.316
-    
-    # Convert correlation to covariance (assume standardized)
-    cov_matrix = corr_matrix.copy()
-    
-    best_alpha = None
-    best_precision = None
-    best_edge_count = 0
-    target_edges = n_features * 1.5  # Target: ~1.5 edges per node
+        alphas = np.logspace(-2, -0.5, 15)  # 0.01 to 0.316 (15 values)
     
     if verbose:
-        print(f"  🔍 Testing {len(alphas)} alpha values...")
+        print(f"  🔍 5-fold CV with {len(alphas)} alpha values...")
     
-    # Try different alphas and pick one with reasonable edge count
-    for alpha in alphas:
-        try:
-            # Fit graphical lasso
-            _, precision = graphical_lasso(cov_matrix, alpha=alpha, max_iter=100)
-            
-            # Count edges
-            n_edges = (np.sum(np.abs(precision) > 1e-4) - n_features) // 2
-            
-            # Select alpha that gives closest to target edge count
-            # But prefer having some edges over none
-            if n_edges >= 5:  # Minimum 5 edges
-                if best_alpha is None or abs(n_edges - target_edges) < abs(best_edge_count - target_edges):
-                    best_alpha = alpha
-                    best_precision = precision
-                    best_edge_count = n_edges
+    # K-fold cross-validation
+    kf = KFold(n_splits=cv_folds, shuffle=True, random_state=42)
+    cv_scores = np.zeros(len(alphas))
+    
+    for alpha_idx, alpha in enumerate(alphas):
+        fold_scores = []
+        
+        for fold_idx, (train_idx, test_idx) in enumerate(kf.split(X)):
+            try:
+                # Split data
+                X_train = X[train_idx]
+                X_test = X[test_idx]
                 
-        except Exception as e:
-            if verbose:
-                print(f"    ⚠️  Alpha {alpha:.4f} failed: {str(e)[:50]}")
-            continue
+                # Train: Compute Spearman correlation on training data
+                train_corr = np.corrcoef(X_train.T)
+                
+                # Ensure positive definite
+                train_corr = train_corr + np.eye(n_features) * 1e-6
+                
+                # Fit Graphical Lasso on training data
+                _, precision_train = graphical_lasso(train_corr, alpha=alpha, max_iter=100)
+                
+                # Test: Compute log-likelihood on test data
+                test_corr = np.corrcoef(X_test.T)
+                test_corr = test_corr + np.eye(n_features) * 1e-6
+                
+                # Log-likelihood: log det(Θ) - tr(S_test * Θ)
+                sign, logdet = np.linalg.slogdet(precision_train)
+                if sign > 0:
+                    log_lik = logdet - np.trace(test_corr @ precision_train)
+                    fold_scores.append(log_lik)
+                
+            except Exception as e:
+                if verbose and fold_idx == 0:
+                    print(f"    ⚠️  Alpha {alpha:.4f} fold {fold_idx+1} failed: {str(e)[:50]}")
+                continue
+        
+        # Average log-likelihood across folds
+        if len(fold_scores) > 0:
+            cv_scores[alpha_idx] = np.mean(fold_scores)
+        else:
+            cv_scores[alpha_idx] = -np.inf
     
-    # If no alpha gave sufficient edges, use smallest alpha
-    if best_alpha is None:
-        best_alpha = alphas[0]  # Smallest (least penalty)
-        try:
-            _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
-            best_edge_count = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
-        except:
-            # Ultimate fallback: use very small alpha
-            best_alpha = 0.01
-            _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
-            best_edge_count = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+    # Select alpha with best (highest) log-likelihood
+    valid_indices = np.where(np.isfinite(cv_scores))[0]
+    
+    if len(valid_indices) == 0:
+        # Fallback to smallest alpha
+        best_alpha = alphas[0]
+        if verbose:
+            print(f"  ⚠️  No valid CV scores, using smallest alpha: {best_alpha:.4f}")
+    else:
+        best_idx = valid_indices[np.argmax(cv_scores[valid_indices])]
+        best_alpha = alphas[best_idx]
         
         if verbose:
-            print(f"  ⚠️  Using smallest alpha (no sufficient edges found): {best_alpha:.4f}")
-    else:
-        if verbose:
-            print(f"  ✅ Best alpha: {best_alpha:.4f} ({best_edge_count} edges)")
+            print(f"  ✅ Best alpha by CV: {best_alpha:.4f} (log-lik={cv_scores[best_idx]:.2f})")
+    
+    # Fit final model on full data
+    cov_matrix = corr_matrix.copy()
+    try:
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    except:
+        # Fallback
+        best_alpha = 0.01
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    
+    # Count edges
+    n_edges = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+    
+    if verbose:
+        print(f"  📊 Final model: {n_edges} edges")
     
     # Convert precision matrix to partial correlation matrix
-    # Partial correlation: -precision[i,j] / sqrt(precision[i,i] * precision[j,j])
     partial_corr = np.zeros_like(best_precision)
     for i in range(n_features):
         for j in range(n_features):
@@ -221,7 +245,133 @@ def graphical_lasso_cv(corr_matrix, alphas=None, cv_folds=5, verbose=False):
     
     return best_alpha, best_precision, partial_corr
 
-def create_ggm_network(data, food_groups, min_correlation=0.1, verbose=False):
+
+def graphical_lasso_stars(X, corr_matrix, alphas=None, n_subsample=20, 
+                          subsample_ratio=0.8, beta=0.1, verbose=False):
+    """
+    StARS (Stability Approach to Regularization Selection) for Graphical Lasso
+    
+    Reference: Liu et al. (2010) "Stability Approach to Regularization Selection (StARS) 
+    for High Dimensional Graphical Models"
+    
+    Args:
+        X: Original data matrix (n_samples, n_features)
+        corr_matrix: Full correlation matrix (for final model fitting)
+        alphas: List of regularization parameters to try
+        n_subsample: Number of subsamples (default: 20)
+        subsample_ratio: Proportion of data in each subsample (default: 0.8)
+        beta: Instability threshold (default: 0.1)
+        verbose: Print progress
+    
+    Returns:
+        Best alpha, precision matrix, partial correlation matrix
+    """
+    n_samples, n_features = X.shape
+    subsample_size = int(n_samples * subsample_ratio)
+    
+    # Default alpha range if not specified
+    if alphas is None:
+        alphas = np.logspace(-2, -0.5, 15)  # 0.01 to 0.316 (15 values)
+    
+    if verbose:
+        print(f"  🔍 StARS with {n_subsample} subsamples, testing {len(alphas)} alphas...")
+    
+    instabilities = []
+    
+    for alpha_idx, alpha in enumerate(alphas):
+        # Store edge matrices from subsamples
+        edge_matrices = []
+        
+        for subsample_idx in range(n_subsample):
+            try:
+                # Random subsample without replacement
+                np.random.seed(42 + subsample_idx)
+                subsample_indices = np.random.choice(n_samples, size=subsample_size, replace=False)
+                X_sub = X[subsample_indices]
+                
+                # Compute correlation on subsample
+                sub_corr = np.corrcoef(X_sub.T)
+                sub_corr = sub_corr + np.eye(n_features) * 1e-6
+                
+                # Fit Graphical Lasso
+                _, precision_sub = graphical_lasso(sub_corr, alpha=alpha, max_iter=100)
+                
+                # Extract edge presence (binary matrix)
+                edges = (np.abs(precision_sub) > 1e-4).astype(int)
+                np.fill_diagonal(edges, 0)  # Exclude diagonal
+                edge_matrices.append(edges)
+                
+            except Exception as e:
+                if verbose and subsample_idx == 0:
+                    print(f"    ⚠️  Alpha {alpha:.4f} subsample {subsample_idx+1} failed")
+                continue
+        
+        if len(edge_matrices) == 0:
+            instabilities.append(np.inf)
+            continue
+        
+        # Calculate instability
+        edge_matrices = np.array(edge_matrices)  # (n_subsample, p, p)
+        
+        # For each edge (i,j), compute variance across subsamples
+        # θ_ij^b ∈ {0,1} for subsample b
+        # Variability: 2 * θ_ij * (1 - θ_ij) where θ_ij = mean across subsamples
+        edge_probs = np.mean(edge_matrices, axis=0)  # Probability of each edge
+        edge_variability = 2 * edge_probs * (1 - edge_probs)
+        
+        # Total instability: average variability over all edges (upper triangle)
+        upper_tri_indices = np.triu_indices(n_features, k=1)
+        total_instability = np.mean(edge_variability[upper_tri_indices])
+        
+        instabilities.append(total_instability)
+    
+    instabilities = np.array(instabilities)
+    
+    # Select largest alpha (most sparse) with instability ≤ beta
+    valid_indices = np.where(instabilities <= beta)[0]
+    
+    if len(valid_indices) == 0:
+        # If all too unstable, select alpha with minimum instability
+        best_idx = np.argmin(instabilities)
+        best_alpha = alphas[best_idx]
+        if verbose:
+            print(f"  ⚠️  No stable solution (β={beta}), using min instability: {best_alpha:.4f}")
+    else:
+        # Select largest alpha (most regularization) that is stable
+        best_idx = valid_indices[-1]  # Largest alpha among valid ones
+        best_alpha = alphas[best_idx]
+        
+        if verbose:
+            print(f"  ✅ Best alpha by StARS: {best_alpha:.4f} (instability={instabilities[best_idx]:.4f})")
+    
+    # Fit final model on full data
+    cov_matrix = corr_matrix.copy()
+    try:
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    except:
+        best_alpha = 0.01
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    
+    # Count edges
+    n_edges = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+    
+    if verbose:
+        print(f"  📊 Final model: {n_edges} edges")
+    
+    # Convert to partial correlation
+    partial_corr = np.zeros_like(best_precision)
+    for i in range(n_features):
+        for j in range(n_features):
+            if i == j:
+                partial_corr[i, j] = 1.0
+            else:
+                denom = np.sqrt(best_precision[i, i] * best_precision[j, j])
+                if denom > 0:
+                    partial_corr[i, j] = -best_precision[i, j] / denom
+    
+    return best_alpha, best_precision, partial_corr
+
+def create_ggm_network(data, food_groups, min_correlation=0.1, cv_method='5fold', verbose=False):
     """
     Create GGM network using Semiparametric Gaussian Copula approach
     
@@ -235,6 +385,7 @@ def create_ggm_network(data, food_groups, min_correlation=0.1, verbose=False):
         data: DataFrame with continuous food group scores
         food_groups: List of food group column names
         min_correlation: Minimum partial correlation to include edge
+        cv_method: Method for selecting lambda ('5fold' or 'stars')
         verbose: Print detailed progress
     
     Returns:
@@ -249,6 +400,9 @@ def create_ggm_network(data, food_groups, min_correlation=0.1, verbose=False):
     # Handle missing values
     X = X.fillna(X.mean())
     
+    # Convert to numpy array
+    X_array = X.values
+    
     # Step 1: Spearman correlation (rank-based transformation)
     if verbose:
         print(f"  📈 Step 1: Computing Spearman correlation matrix...")
@@ -256,13 +410,28 @@ def create_ggm_network(data, food_groups, min_correlation=0.1, verbose=False):
     
     # Step 2: Graphical Lasso (cross-validated)
     if verbose:
-        print(f"  🔧 Step 2: Applying Graphical Lasso with CV...")
-    best_alpha, precision, partial_corr = graphical_lasso_cv(
-        corr_matrix, 
-        alphas=np.logspace(-2, -0.3, 15),
-        cv_folds=5,
-        verbose=verbose
-    )
+        print(f"  🔧 Step 2: Applying Graphical Lasso with {cv_method.upper()}...")
+    
+    alphas = np.logspace(-2, -0.5, 15)  # 0.01 to 0.316 (15 values)
+    
+    if cv_method == 'stars':
+        best_alpha, precision, partial_corr = graphical_lasso_stars(
+            X_array,
+            corr_matrix, 
+            alphas=alphas,
+            n_subsample=20,
+            subsample_ratio=0.8,
+            beta=0.1,
+            verbose=verbose
+        )
+    else:  # Default: 5-fold CV
+        best_alpha, precision, partial_corr = graphical_lasso_cv_loglik(
+            X_array,
+            corr_matrix, 
+            alphas=alphas,
+            cv_folds=5,
+            verbose=verbose
+        )
     
     # Step 3: Create NetworkX graph
     if verbose:
@@ -381,9 +550,13 @@ def save_network_results(G, sex, age_group, mets_status, alpha, partial_corr_mat
 # Main Processing
 # ============================================================================
 
-def process_all_groups(df):
+def process_all_groups(df, cv_method='5fold'):
     """
     Process all 11 groups with GGM analysis
+    
+    Args:
+        df: DataFrame with all data
+        cv_method: Method for lambda selection ('5fold' or 'stars')
     """
     results = []
     
@@ -410,6 +583,7 @@ def process_all_groups(df):
                 group_data, 
                 FOOD_GROUPS, 
                 min_correlation=0.1,  # Minimum partial correlation threshold
+                cv_method=cv_method,
                 verbose=True
             )
             
@@ -454,8 +628,13 @@ def process_all_groups(df):
     
     return pd.DataFrame(results)
 
-def main():
-    """Main execution"""
+def main(cv_method='5fold'):
+    """
+    Main execution
+    
+    Args:
+        cv_method: Method for lambda selection ('5fold' or 'stars')
+    """
     print("="*80)
     print("🚀 GGM-BASED STRATIFIED DIETARY NETWORK ANALYSIS (ver4.0)")
     print("="*80)
@@ -464,7 +643,7 @@ def main():
     print("  ✅ Continuous scores (not binarized)")
     print("  ✅ Partial correlations (controlling for all other foods)")
     print("  ✅ Graphical Lasso (removes spurious correlations)")
-    print("  ✅ Cross-validation for optimal regularization")
+    print(f"  ✅ {cv_method.upper()} for optimal regularization")
     print("="*80)
     
     # Load data
@@ -483,10 +662,10 @@ def main():
     
     # Process all groups
     print(f"\n{'='*80}")
-    print("PROCESSING 11 STRATIFIED GROUPS")
+    print(f"PROCESSING 11 STRATIFIED GROUPS with {cv_method.upper()}")
     print(f"{'='*80}")
     
-    results_df = process_all_groups(df)
+    results_df = process_all_groups(df, cv_method=cv_method)
     
     # Save summary statistics
     if len(results_df) > 0:
@@ -517,4 +696,17 @@ def main():
         print("\n❌ No networks were successfully created!")
 
 if __name__ == "__main__":
-    main()
+    import sys
+    
+    # Check command line arguments
+    if len(sys.argv) > 1:
+        cv_method = sys.argv[1].lower()
+        if cv_method not in ['5fold', 'stars']:
+            print("❌ Invalid CV method. Use '5fold' or 'stars'")
+            print("Usage: python ggm_stratified_networks.py [5fold|stars]")
+            sys.exit(1)
+    else:
+        cv_method = '5fold'  # Default
+    
+    print(f"\n🎯 Using {cv_method.upper()} for lambda selection\n")
+    main(cv_method=cv_method)
