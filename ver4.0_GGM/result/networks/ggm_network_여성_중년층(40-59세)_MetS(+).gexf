@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
-  <meta lastmodifieddate="2025-11-21">
+  <meta lastmodifieddate="2025-11-06">
     <creator>NetworkX 3.5</creator>
   </meta>
   <graph defaultedgetype="undirected" mode="static" name="">
@@ -22,74 +22,39 @@
       <node id="Sweet Food Consumption" label="Sweet Food Consumption" />
     </nodes>
     <edges>
-      <edge source="Grain Products" target="Vegetables" id="0" weight="0.13085036677640186">
+      <edge source="Protein Foods" target="Vegetables" id="0" weight="0.375923759321063">
         <attvalues>
-          <attvalue for="0" value="0.13085036677640186" />
+          <attvalue for="0" value="0.375923759321063" />
         </attvalues>
       </edge>
-      <edge source="Grain Products" target="Salty Food Consumption" id="1" weight="0.14296464495377184">
+      <edge source="Dairy Products" target="Fruits" id="1" weight="0.10166093256064364">
         <attvalues>
-          <attvalue for="0" value="0.14296464495377184" />
+          <attvalue for="0" value="0.10166093256064364" />
         </attvalues>
       </edge>
-      <edge source="Protein Foods" target="Vegetables" id="2" weight="0.4538001848044961">
+      <edge source="Fried Foods" target="High Fat Meat" id="2" weight="0.1911324204486055">
         <attvalues>
-          <attvalue for="0" value="0.4538001848044961" />
+          <attvalue for="0" value="0.1911324204486055" />
         </attvalues>
       </edge>
-      <edge source="Dairy Products" target="Fruits" id="3" weight="0.19539260216333307">
+      <edge source="Fried Foods" target="Processed Foods" id="3" weight="0.17521150658124066">
         <attvalues>
-          <attvalue for="0" value="0.19539260216333307" />
+          <attvalue for="0" value="0.17521150658124066" />
         </attvalues>
       </edge>
-      <edge source="Fried Foods" target="High Fat Meat" id="4" weight="0.2516251848731095">
+      <edge source="Processed Foods" target="Sweet Food Consumption" id="4" weight="0.13452202566260724">
         <attvalues>
-          <attvalue for="0" value="0.2516251848731095" />
+          <attvalue for="0" value="0.13452202566260724" />
         </attvalues>
       </edge>
-      <edge source="Fried Foods" target="Processed Foods" id="5" weight="0.2076246952204289">
+      <edge source="Sugar-Sweetened Beverages" target="Sweet Food Consumption" id="5" weight="0.1045271229460868">
         <attvalues>
-          <attvalue for="0" value="0.2076246952204289" />
+          <attvalue for="0" value="0.1045271229460868" />
         </attvalues>
       </edge>
-      <edge source="Fried Foods" target="Sugar-Sweetened Beverages" id="6" weight="0.11877505093161599">
+      <edge source="Additional Salt Use" target="Salty Food Consumption" id="6" weight="0.13762251824844926">
         <attvalues>
-          <attvalue for="0" value="0.11877505093161599" />
-        </attvalues>
-      </edge>
-      <edge source="Fried Foods" target="Sweet Food Consumption" id="7" weight="0.11860327641572614">
-        <attvalues>
-          <attvalue for="0" value="0.11860327641572614" />
-        </attvalues>
-      </edge>
-      <edge source="High Fat Meat" target="Processed Foods" id="8" weight="0.11617419653842162">
-        <attvalues>
-          <attvalue for="0" value="0.11617419653842162" />
-        </attvalues>
-      </edge>
-      <edge source="High Fat Meat" target="Salty Food Consumption" id="9" weight="0.10628481464793071">
-        <attvalues>
-          <attvalue for="0" value="0.10628481464793071" />
-        </attvalues>
-      </edge>
-      <edge source="Processed Foods" target="Sugar-Sweetened Beverages" id="10" weight="0.13436914532245975">
-        <attvalues>
-          <attvalue for="0" value="0.13436914532245975" />
-        </attvalues>
-      </edge>
-      <edge source="Processed Foods" target="Sweet Food Consumption" id="11" weight="0.18904233630407644">
-        <attvalues>
-          <attvalue for="0" value="0.18904233630407644" />
-        </attvalues>
-      </edge>
-      <edge source="Sugar-Sweetened Beverages" target="Sweet Food Consumption" id="12" weight="0.17126449923529175">
-        <attvalues>
-          <attvalue for="0" value="0.17126449923529175" />
-        </attvalues>
-      </edge>
-      <edge source="Additional Salt Use" target="Salty Food Consumption" id="13" weight="0.22262579369279792">
-        <attvalues>
-          <attvalue for="0" value="0.22262579369279792" />
+          <attvalue for="0" value="0.13762251824844926" />
         </attvalues>
       </edge>
     </edges>
