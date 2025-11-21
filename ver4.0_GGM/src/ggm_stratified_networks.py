@@ -31,7 +31,12 @@ from scipy.spatial.distance import squareform
 from sklearn.covariance import graphical_lasso
 from sklearn.model_selection import KFold
 import warnings
+import random
 warnings.filterwarnings('ignore')
+
+# Set random seeds for reproducibility
+np.random.seed(42)
+random.seed(42)
 
 # ============================================================================
 # Configuration
@@ -179,7 +184,7 @@ def graphical_lasso_cv_loglik(X, corr_matrix, alphas=None, cv_folds=5, verbose=F
                 train_corr = train_corr + np.eye(n_features) * 1e-6
                 
                 # Fit Graphical Lasso on training data
-                _, precision_train = graphical_lasso(train_corr, alpha=alpha, max_iter=100)
+                _, precision_train = graphical_lasso(train_corr, alpha=alpha, max_iter=1000, tol=1e-6)
                 
                 # Test: Compute log-likelihood on test data
                 test_corr = np.corrcoef(X_test.T)
@@ -220,11 +225,11 @@ def graphical_lasso_cv_loglik(X, corr_matrix, alphas=None, cv_folds=5, verbose=F
     # Fit final model on full data
     cov_matrix = corr_matrix.copy()
     try:
-        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=1000, tol=1e-6)
     except:
         # Fallback
         best_alpha = 0.01
-        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=1000, tol=1e-6)
     
     # Count edges
     n_edges = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
@@ -294,7 +299,7 @@ def graphical_lasso_stars(X, corr_matrix, alphas=None, n_subsample=20,
                 sub_corr = sub_corr + np.eye(n_features) * 1e-6
                 
                 # Fit Graphical Lasso
-                _, precision_sub = graphical_lasso(sub_corr, alpha=alpha, max_iter=100)
+                _, precision_sub = graphical_lasso(sub_corr, alpha=alpha, max_iter=1000, tol=1e-6)
                 
                 # Extract edge presence (binary matrix)
                 edges = (np.abs(precision_sub) > 1e-4).astype(int)
@@ -347,10 +352,10 @@ def graphical_lasso_stars(X, corr_matrix, alphas=None, n_subsample=20,
     # Fit final model on full data
     cov_matrix = corr_matrix.copy()
     try:
-        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=1000, tol=1e-6)
     except:
         best_alpha = 0.01
-        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=1000, tol=1e-6)
     
     # Count edges
     n_edges = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
