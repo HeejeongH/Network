@@ -1,12 +1,12 @@
-Group,N,Nodes,Edges,Density,Clustering,Avg Degree,Alpha,Top Hub 1,Top Hub 2,Top Hub 3
-남 청년 MetS(+),516,12,8,0.121,0.194,1.33,0.1238,Processed Foods,Vegetables,Fried Foods
-남 청년 MetS(-),1963,12,9,0.136,0.194,1.50,0.1238,Processed Foods,Protein Foods,Fried Foods
-남 중년 MetS(+),2938,12,8,0.121,0.000,1.33,0.1238,Protein Foods,Fried Foods,Processed Foods
-남 중년 MetS(-),4737,12,7,0.106,0.000,1.17,0.1238,Protein Foods,Fried Foods,Processed Foods
-남 장년 MetS(+),971,12,6,0.091,0.000,1.00,0.1638,Fried Foods,Processed Foods,Sugar-Sweetened Beverages
-남 장년 MetS(-),1169,12,6,0.091,0.000,1.00,0.1638,Protein Foods,Fried Foods,Processed Foods
-여 청년 MetS(-),2519,12,5,0.076,0.000,0.83,0.1638,High Fat Meat,Processed Foods,Protein Foods
-여 중년 MetS(+),758,12,7,0.106,0.000,1.17,0.1238,Fried Foods,Processed Foods,Sweet Food Consumption
-여 중년 MetS(-),5629,12,7,0.106,0.000,1.17,0.1238,Processed Foods,Protein Foods,Fried Foods
-여 장년 MetS(+),680,12,6,0.091,0.250,1.00,0.1238,Protein Foods,Fried Foods,High Fat Meat
-여 장년 MetS(-),1084,12,3,0.045,0.000,0.50,0.1238,Protein Foods,Vegetables,Processed Foods
+Group,N,Nodes,Edges,Density,Clustering,Avg Degree,Modularity,N Communities,Alpha,Hub 1 (Degree),Hub 2 (Degree),Hub 3 (Degree),Hub 1 (Betweenness),Hub 2 (Betweenness),Hub 3 (Betweenness),Hub 1 (Closeness),Hub 2 (Closeness),Hub 3 (Closeness)
+Male_Young_MetS(+),516,12,8,0.121,0.194,1.33,0.616,6,0.1238,Processed Foods (0.273),Vegetables (0.182),Fried Foods (0.182),Processed Foods (0.073),Sugar-Sweetened Beverages (0.055),Vegetables (0.018),Processed Foods (0.291),Sugar-Sweetened Beverages (0.242),Fried Foods (0.208)
+Male_Middle_MetS(+),2938,12,8,0.121,0.000,1.33,0.658,4,0.1238,Protein Foods (0.182),Fried Foods (0.182),Processed Foods (0.182),Processed Foods (0.073),Fried Foods (0.055),Sugar-Sweetened Beverages (0.055),Processed Foods (0.242),Fried Foods (0.208),Sugar-Sweetened Beverages (0.208)
+Male_Older_MetS(+),971,12,6,0.091,0.000,1.00,0.618,7,0.1638,Fried Foods (0.182),Processed Foods (0.182),Sugar-Sweetened Beverages (0.182),Processed Foods (0.073),Fried Foods (0.055),Sugar-Sweetened Beverages (0.055),Processed Foods (0.242),Fried Foods (0.208),Sugar-Sweetened Beverages (0.208)
+Male_Young_MetS(-),4737,12,7,0.106,0.000,1.17,0.589,6,0.1238,Protein Foods (0.182),Fried Foods (0.182),Processed Foods (0.182),Processed Foods (0.073),Fried Foods (0.055),Sugar-Sweetened Beverages (0.055),Processed Foods (0.242),Fried Foods (0.208),Sugar-Sweetened Beverages (0.208)
+Male_Middle_MetS(-),1963,12,9,0.136,0.194,1.50,0.660,5,0.1238,Processed Foods (0.273),Protein Foods (0.182),Fried Foods (0.182),Processed Foods (0.073),Sugar-Sweetened Beverages (0.055),Protein Foods (0.018),Processed Foods (0.291),Sugar-Sweetened Beverages (0.242),Fried Foods (0.208)
+Male_Older_MetS(-),1169,12,6,0.091,0.000,1.00,0.653,6,0.1638,Protein Foods (0.182),Fried Foods (0.182),Processed Foods (0.182),Fried Foods (0.036),Processed Foods (0.036),Protein Foods (0.018),Fried Foods (0.205),Processed Foods (0.205),Protein Foods (0.182)
+Female_Middle_MetS(+),758,12,7,0.106,0.000,1.17,0.629,6,0.1238,Fried Foods (0.182),Processed Foods (0.182),Sweet Food Consumption (0.182),Processed Foods (0.073),Fried Foods (0.055),Sweet Food Consumption (0.055),Processed Foods (0.242),Fried Foods (0.208),Sweet Food Consumption (0.208)
+Female_Older_MetS(+),680,12,6,0.091,0.250,1.00,0.643,7,0.1238,Protein Foods (0.182),Fried Foods (0.182),High Fat Meat (0.182),Protein Foods (0.018),Grain Products (0.000),Vegetables (0.000),Protein Foods (0.182),Fried Foods (0.182),High Fat Meat (0.182)
+Female_Young_MetS(-),2519,12,5,0.076,0.000,0.83,0.643,7,0.1638,High Fat Meat (0.182),Processed Foods (0.182),Protein Foods (0.091),High Fat Meat (0.036),Processed Foods (0.036),Grain Products (0.000),High Fat Meat (0.205),Processed Foods (0.205),Fried Foods (0.136)
+Female_Middle_MetS(-),5629,12,7,0.106,0.000,1.17,0.597,6,0.1238,Processed Foods (0.273),Protein Foods (0.182),Fried Foods (0.182),Processed Foods (0.091),Fried Foods (0.055),Protein Foods (0.018),Processed Foods (0.291),Fried Foods (0.242),Protein Foods (0.182)
+Female_Older_MetS(-),1084,12,3,0.045,0.000,0.50,0.626,9,0.1238,Protein Foods (0.091),Vegetables (0.091),Processed Foods (0.091),Grain Products (0.000),Protein Foods (0.000),Vegetables (0.000),Protein Foods (0.091),Vegetables (0.091),Processed Foods (0.091)

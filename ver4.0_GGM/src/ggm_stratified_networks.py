@@ -1,27 +1,3 @@
-#!/usr/bin/env python3
-"""
-ver4.0: Gaussian Graphical Model (GGM) for Stratified Dietary Networks
------------------------------------------------------------------------
-Upgrade from simple co-occurrence to GGM using partial correlations
-
-Key improvements over ver3.0:
-1. Uses continuous scores (not binarized) - preserves information
-2. Estimates partial correlations controlling for all other foods
-3. Removes spurious correlations via Graphical Lasso
-4. Data-driven threshold selection via cross-validation
-5. Handles non-normal distributions with rank-based transformations
-
-Methods:
-- Semiparametric Gaussian Copula Graphical Model (SGCGM)
-- Spearman correlation for rank-based transformation
-- Graphical Lasso (L1-penalized precision matrix estimation)
-- Cross-validation for optimal regularization parameter
-
-References:
-- Schwedhelm et al. (2021) - Meal patterns in pregnancy
-- Schwedhelm et al. (2018) - Meal and habitual dietary networks
-"""
-
 import pandas as pd
 import numpy as np
 import networkx as nx

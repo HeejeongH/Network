@@ -1,0 +1,6 @@
+community_id,size,nodes,internal_edges,internal_density
+1,2,Sugar-Sweetened Beverages; Sweet Food Consumption,1,1.0
+2,3,Grain Products; Protein Foods; Vegetables,3,1.0
+3,2,Dairy Products; Fruits,1,1.0
+4,3,Fried Foods; High Fat Meat; Processed Foods,3,1.0
+5,2,Additional Salt Use; Salty Food Consumption,1,1.0
