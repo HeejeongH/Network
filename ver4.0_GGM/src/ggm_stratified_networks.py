@@ -6,6 +6,7 @@ from scipy import stats
 from scipy.spatial.distance import squareform
 from sklearn.covariance import graphical_lasso
 from sklearn.model_selection import KFold
+from networkx.algorithms import community as nx_community
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -14,8 +15,8 @@ warnings.filterwarnings('ignore')
 # ============================================================================
 
 # Paths
-BASE_DIR = Path('/home/user/Network/ver4.0_GGM')
-DATA_FILE = Path('/home/user/Network/ver3.0_2511/db/processed_data') / 'total_only_org.csv'  # Use ver3.0 data
+BASE_DIR = Path('/Users/heejeong/Library/CloudStorage/GoogleDrive-hhj2831@gmail.com/내 드라이브/#인력양성/3. 식이_SNUH/#Network/ver4.0_GGM')
+DATA_FILE = BASE_DIR / 'db' / 'total_only_org.csv'
 OUTPUT_DIR = BASE_DIR / 'result' / 'networks'
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -57,12 +58,9 @@ SEX_DISPLAY = {'M': '남성', 'F': '여성'}
 # ============================================================================
 
 def load_data():
-    """Load the original dataset"""
-    print(f"📂 Loading data from: {DATA_FILE}")
     df = pd.read_csv(DATA_FILE)
-    print(f"✅ Loaded {len(df):,} samples")
+    print(f"Loaded {len(df):,} samples")
     
-    # Create Age_Group
     def categorize_age(age):
         if age < 40:
             return '청년층(19-39세)'
@@ -74,117 +72,102 @@ def load_data():
     df['Age_Group'] = df['Age'].apply(categorize_age)
     df['MetS_Status'] = df['MetS'].apply(lambda x: 'MetS(+)' if x == 1 else 'MetS(-)')
     
-    print(f"✅ Created Age_Group and MetS_Status columns")
-    
+    print(f"Created Age_Group and MetS_Status columns")    
     return df
 
 # ============================================================================
 # GGM Core Functions
 # ============================================================================
 
-def spearman_correlation_matrix(data):
-    """
-    Calculate Spearman correlation matrix (rank-based)
+def nonparanormal_skeptic_transform(X):
+    n_samples, n_features = X.shape
+    Z = np.zeros_like(X, dtype=float)
     
-    This handles non-normal distributions common in dietary data
-    Following the "nonparanormal skeptic" transformation approach
+    for j in range(n_features):
+        # Step 1: Rank transformation
+        ranks = np.argsort(np.argsort(X[:, j])) + 1
+        
+        # Step 2: Empirical CDF with Winsorization
+        F_hat = (ranks - 0.5) / n_samples
+        
+        # Step 3: Quantile transformation
+        Z[:, j] = stats.norm.ppf(F_hat)
     
-    Args:
-        data: DataFrame with continuous food group scores
-    
-    Returns:
-        Correlation matrix
-    """
-    n_features = data.shape[1]
-    corr_matrix = np.zeros((n_features, n_features))
-    
-    for i in range(n_features):
-        for j in range(i, n_features):
-            if i == j:
-                corr_matrix[i, j] = 1.0
-            else:
-                # Spearman correlation
-                corr, _ = stats.spearmanr(data.iloc[:, i], data.iloc[:, j])
-                corr_matrix[i, j] = corr
-                corr_matrix[j, i] = corr
-    
+    return Z
+
+def nonparanormal_correlation_matrix(data):
+    X = data.values
+
+    Z = nonparanormal_skeptic_transform(X)
+    corr_matrix = np.corrcoef(Z.T)
+
     return corr_matrix
 
-def graphical_lasso_cv(corr_matrix, alphas=None, cv_folds=5, verbose=False):
-    """
-    Cross-validated Graphical Lasso to find optimal regularization parameter
+def graphical_lasso_cv_loglik(X, corr_matrix, alphas=None, cv_folds=5):
+    n_samples, n_features = X.shape    
+    kf = KFold(n_splits=cv_folds, shuffle=True, random_state=42)
+    cv_scores = np.zeros(len(alphas))
     
-    SIMPLIFIED VERSION: Test multiple alphas and select one with reasonable edge count
-    
-    Args:
-        corr_matrix: Correlation matrix
-        alphas: List of regularization parameters to try
-        cv_folds: Number of CV folds
-        verbose: Print progress
-    
-    Returns:
-        Best alpha, precision matrix, partial correlation matrix
-    """
-    n_features = corr_matrix.shape[0]
-    
-    # Default alpha range if not specified
-    # Use smaller alphas to ensure edges are not over-penalized
-    if alphas is None:
-        alphas = np.logspace(-2, -0.5, 10)  # 0.01 to 0.316
-    
-    # Convert correlation to covariance (assume standardized)
-    cov_matrix = corr_matrix.copy()
-    
-    best_alpha = None
-    best_precision = None
-    best_edge_count = 0
-    target_edges = n_features * 1.5  # Target: ~1.5 edges per node
-    
-    if verbose:
-        print(f"  🔍 Testing {len(alphas)} alpha values...")
-    
-    # Try different alphas and pick one with reasonable edge count
-    for alpha in alphas:
-        try:
-            # Fit graphical lasso
-            _, precision = graphical_lasso(cov_matrix, alpha=alpha, max_iter=100)
-            
-            # Count edges
-            n_edges = (np.sum(np.abs(precision) > 1e-4) - n_features) // 2
-            
-            # Select alpha that gives closest to target edge count
-            # But prefer having some edges over none
-            if n_edges >= 5:  # Minimum 5 edges
-                if best_alpha is None or abs(n_edges - target_edges) < abs(best_edge_count - target_edges):
-                    best_alpha = alpha
-                    best_precision = precision
-                    best_edge_count = n_edges
-                
-        except Exception as e:
-            if verbose:
-                print(f"    ⚠️  Alpha {alpha:.4f} failed: {str(e)[:50]}")
-            continue
-    
-    # If no alpha gave sufficient edges, use smallest alpha
-    if best_alpha is None:
-        best_alpha = alphas[0]  # Smallest (least penalty)
-        try:
-            _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
-            best_edge_count = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
-        except:
-            # Ultimate fallback: use very small alpha
-            best_alpha = 0.01
-            _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
-            best_edge_count = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+    for alpha_idx, alpha in enumerate(alphas):
+        fold_scores = []
         
-        if verbose:
-            print(f"  ⚠️  Using smallest alpha (no sufficient edges found): {best_alpha:.4f}")
+        for fold_idx, (train_idx, test_idx) in enumerate(kf.split(X)):
+            try:
+                X_train = X[train_idx]
+                X_test = X[test_idx]
+                
+                # Train: Compute Spearman correlation on training data
+                train_corr = np.corrcoef(X_train.T)
+                
+                # Ensure positive definite
+                train_corr = train_corr + np.eye(n_features) * 1e-6
+                
+                # Fit Graphical Lasso on training data
+                _, precision_train = graphical_lasso(train_corr, alpha=alpha, max_iter=100)
+                
+                # Test: Compute log-likelihood on test data
+                test_corr = np.corrcoef(X_test.T)
+                test_corr = test_corr + np.eye(n_features) * 1e-6
+                
+                # Log-likelihood: log det(Θ) - tr(S_test * Θ)
+                sign, logdet = np.linalg.slogdet(precision_train)
+                if sign > 0:
+                    log_lik = logdet - np.trace(test_corr @ precision_train)
+                    fold_scores.append(log_lik)
+                
+            except Exception as e:
+                continue
+        
+        # Average log-likelihood across folds
+        if len(fold_scores) > 0:
+            cv_scores[alpha_idx] = np.mean(fold_scores)
+        else:
+            cv_scores[alpha_idx] = -np.inf
+    
+    # Select alpha with best (highest) log-likelihood
+    valid_indices = np.where(np.isfinite(cv_scores))[0]
+    
+    if len(valid_indices) == 0:
+        best_alpha = alphas[0]
     else:
-        if verbose:
-            print(f"  ✅ Best alpha: {best_alpha:.4f} ({best_edge_count} edges)")
+        best_idx = valid_indices[np.argmax(cv_scores[valid_indices])]
+        best_alpha = alphas[best_idx]
+            
+    # Fit final model on full data
+    cov_matrix = corr_matrix.copy()
+    try:
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    except:
+        # Fallback
+        best_alpha = 0.01
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    
+    # Count edges
+    n_edges = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+    
+    print(f"   Final model: {n_edges} edges")
     
     # Convert precision matrix to partial correlation matrix
-    # Partial correlation: -precision[i,j] / sqrt(precision[i,i] * precision[j,j])
     partial_corr = np.zeros_like(best_precision)
     for i in range(n_features):
         for j in range(n_features):
@@ -197,27 +180,101 @@ def graphical_lasso_cv(corr_matrix, alphas=None, cv_folds=5, verbose=False):
     
     return best_alpha, best_precision, partial_corr
 
-def create_ggm_network(data, food_groups, min_correlation=0.1, verbose=False):
-    """
-    Create GGM network using Semiparametric Gaussian Copula approach
+def graphical_lasso_stars(X, corr_matrix, alphas=None, n_subsample=20, subsample_ratio=0.8, beta=0.1):
+    n_samples, n_features = X.shape
+    subsample_size = int(n_samples * subsample_ratio)
     
-    Pipeline:
-    1. Rank-based transformation (Spearman correlation)
-    2. Graphical Lasso for sparse precision matrix estimation
-    3. Convert to partial correlation network
-    4. Create NetworkX graph
+    print(f"  🔍 StARS with {n_subsample} subsamples, testing {len(alphas)} alphas...")
     
-    Args:
-        data: DataFrame with continuous food group scores
-        food_groups: List of food group column names
-        min_correlation: Minimum partial correlation to include edge
-        verbose: Print detailed progress
+    instabilities = []
     
-    Returns:
-        NetworkX graph with partial correlations as edge weights
-    """
-    if verbose:
-        print(f"\n  📊 Creating GGM network for {len(data)} samples...")
+    for alpha_idx, alpha in enumerate(alphas):
+        edge_matrices = []
+        
+        for subsample_idx in range(n_subsample):
+            try:
+                # Random subsample without replacement
+                np.random.seed(42 + subsample_idx)
+                subsample_indices = np.random.choice(n_samples, size=subsample_size, replace=False)
+                X_sub = X[subsample_indices]
+                
+                # Compute correlation on subsample
+                sub_corr = np.corrcoef(X_sub.T)
+                sub_corr = sub_corr + np.eye(n_features) * 1e-6
+                
+                # Fit Graphical Lasso
+                _, precision_sub = graphical_lasso(sub_corr, alpha=alpha, max_iter=100)
+                
+                # Extract edge presence (binary matrix)
+                edges = (np.abs(precision_sub) > 1e-4).astype(int)
+                np.fill_diagonal(edges, 0)  # Exclude diagonal
+                edge_matrices.append(edges)
+                
+            except Exception as e:
+                print(f"      Alpha {alpha:.4f} subsample {subsample_idx+1} failed")
+                continue
+        
+        if len(edge_matrices) == 0:
+            instabilities.append(np.inf)
+            continue
+        
+        # Calculate instability
+        edge_matrices = np.array(edge_matrices)  # (n_subsample, p, p)
+        edge_probs = np.mean(edge_matrices, axis=0)  # Probability of each edge
+        edge_variability = 2 * edge_probs * (1 - edge_probs)
+        
+        # Total instability: average variability over all edges (upper triangle)
+        upper_tri_indices = np.triu_indices(n_features, k=1)
+        total_instability = np.mean(edge_variability[upper_tri_indices])
+        
+        instabilities.append(total_instability)
+    
+    instabilities = np.array(instabilities)
+    
+    # Select largest alpha (most sparse) with instability ≤ beta
+    valid_indices = np.where(instabilities <= beta)[0]
+    
+    if len(valid_indices) == 0:
+        # If all too unstable, select alpha with minimum instability
+        best_idx = np.argmin(instabilities)
+        best_alpha = alphas[best_idx]
+        print(f"    No stable solution (β={beta}), using min instability: {best_alpha:.4f}")
+    else:
+        # Select largest alpha (most regularization) that is stable
+        best_idx = valid_indices[-1]  # Largest alpha among valid ones
+        best_alpha = alphas[best_idx]
+        
+        print(f"  Best alpha by StARS: {best_alpha:.4f} (instability={instabilities[best_idx]:.4f})")
+    
+    # Fit final model on full data
+    cov_matrix = corr_matrix.copy()
+    try:
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    except:
+        best_alpha = 0.01
+        _, best_precision = graphical_lasso(cov_matrix, alpha=best_alpha, max_iter=100)
+    
+    # Count edges
+    n_edges = (np.sum(np.abs(best_precision) > 1e-4) - n_features) // 2
+    
+    print(f"   Final model: {n_edges} edges")
+    
+    # Convert to partial correlation
+    partial_corr = np.zeros_like(best_precision)
+    for i in range(n_features):
+        for j in range(n_features):
+            if i == j:
+                partial_corr[i, j] = 1.0
+            else:
+                denom = np.sqrt(best_precision[i, i] * best_precision[j, j])
+                if denom > 0:
+                    partial_corr[i, j] = -best_precision[i, j] / denom
+    
+    return best_alpha, best_precision, partial_corr
+
+
+def create_ggm_network(data, food_groups, min_correlation=0.1, cv_method='5fold'):
+    print(f"\n   Creating GGM network for {len(data)} samples...")
     
     # Extract food group data
     X = data[food_groups].copy()
@@ -225,66 +282,117 @@ def create_ggm_network(data, food_groups, min_correlation=0.1, verbose=False):
     # Handle missing values
     X = X.fillna(X.mean())
     
-    # Step 1: Spearman correlation (rank-based transformation)
-    if verbose:
-        print(f"  📈 Step 1: Computing Spearman correlation matrix...")
-    corr_matrix = spearman_correlation_matrix(X)
+    # Convert to numpy array
+    X_array = X.values
+    
+    # Step 1: Nonparanormal transformation
+    corr_matrix = nonparanormal_correlation_matrix(X)
     
     # Step 2: Graphical Lasso (cross-validated)
-    if verbose:
-        print(f"  🔧 Step 2: Applying Graphical Lasso with CV...")
-    best_alpha, precision, partial_corr = graphical_lasso_cv(
-        corr_matrix, 
-        alphas=np.logspace(-2, -0.3, 15),
-        cv_folds=5,
-        verbose=verbose
-    )
+    alphas = np.logspace(-3.5, -1, 20) 
+    if cv_method == 'stars':
+        best_alpha, _, partial_corr = graphical_lasso_stars(
+            X_array,
+            corr_matrix, 
+            alphas=alphas,
+            n_subsample=50,
+            subsample_ratio=0.8,
+            beta=0.15,
+        )
+    else:
+        best_alpha, _, partial_corr = graphical_lasso_cv_loglik(
+            X_array,
+            corr_matrix, 
+            alphas=alphas,
+            cv_folds=5,
+        )
     
     # Step 3: Create NetworkX graph
-    if verbose:
-        print(f"  🕸️  Step 3: Building network graph...")
     G = nx.Graph()
     
-    # Add nodes
     for food in food_groups:
         G.add_node(food)
     
-    # Add edges based on partial correlations
     n_edges = 0
     for i, food1 in enumerate(food_groups):
         for j, food2 in enumerate(food_groups):
             if i < j:
                 partial_corr_value = partial_corr[i, j]
                 
-                # Only add edge if partial correlation is significant
                 if abs(partial_corr_value) >= min_correlation:
-                    G.add_edge(food1, food2, 
-                              weight=abs(partial_corr_value),
-                              partial_corr=partial_corr_value)
+                    G.add_edge(food1, food2, weight=abs(partial_corr_value), partial_corr=partial_corr_value)
                     n_edges += 1
     
-    if verbose:
-        density = nx.density(G)
-        print(f"  ✅ Network created: {len(food_groups)} nodes, {n_edges} edges")
-        print(f"  📊 Density: {density:.4f}, Alpha: {best_alpha:.4f}")
-    
+    density = nx.density(G)
+
     return G, best_alpha, partial_corr
 
 # ============================================================================
 # Network Analysis
 # ============================================================================
 
-def analyze_network_centrality(G, verbose=False):
-    """
-    Calculate multiple centrality metrics for network hubs
+def detect_communities(G, method='louvain'):
+    if G.number_of_edges() == 0:
+        return [{node} for node in G.nodes()], 0.0
     
-    Args:
-        G: NetworkX graph
-        verbose: Print results
+    try:
+        if method == 'louvain':
+            communities = nx_community.louvain_communities(G, weight='weight', seed=42)
+        elif method == 'label_propagation':
+            communities = list(nx_community.label_propagation_communities(G))
+        else:
+            raise ValueError(f"Unknown method: {method}")
+        
+        modularity = nx_community.modularity(G, communities, weight='weight')
+        
+        return communities, modularity
+        
+    except Exception as e:
+        print(f"      Community detection failed: {str(e)}")
+        return [{node} for node in G.nodes()], 0.0
+
+def analyze_communities(G, communities, modularity):
+    n_communities = len(communities)
     
-    Returns:
-        Dictionary of centrality metrics
-    """
+    print(f"\n    Community Detection Results:")
+    print(f"    Number of communities: {n_communities}")
+    print(f"    Modularity: {modularity:.4f}")
+    
+    # Analyze each community
+    community_info = []
+    for i, comm in enumerate(communities, 1):
+        comm_size = len(comm)
+        comm_nodes = sorted(list(comm))
+        
+        # Calculate internal edges (within community)
+        internal_edges = 0
+        for u in comm:
+            for v in comm:
+                if u < v and G.has_edge(u, v):
+                    internal_edges += 1
+        
+        # Calculate internal density
+        max_internal_edges = comm_size * (comm_size - 1) / 2
+        internal_density = internal_edges / max_internal_edges if max_internal_edges > 0 else 0
+        
+        print(f"    Community {i}: {comm_size} nodes, {internal_edges} edges (density: {internal_density:.3f})")
+        print(f"    Foods: {', '.join(comm_nodes)}")
+        
+        community_info.append({
+            'community_id': i,
+            'size': comm_size,
+            'nodes': comm_nodes,
+            'internal_edges': internal_edges,
+            'internal_density': internal_density
+        })
+    
+    return {
+        'n_communities': n_communities,
+        'modularity': modularity,
+        'communities': community_info
+    }
+
+def analyze_network_centrality(G):
     if G.number_of_edges() == 0:
         return {}
     
@@ -310,23 +418,14 @@ def analyze_network_centrality(G, verbose=False):
             'closeness': closeness_cent.get(node, 0)
         }
     
-    if verbose:
-        print(f"\n  🎯 Top 3 hubs by degree centrality:")
-        top_3 = sorted(degree_cent.items(), key=lambda x: x[1], reverse=True)[:3]
-        for i, (node, cent) in enumerate(top_3, 1):
-            print(f"    {i}. {node}: {cent:.4f}")
+    print(f"\n  🎯 Top 3 hubs by degree centrality:")
+    top_3 = sorted(degree_cent.items(), key=lambda x: x[1], reverse=True)[:3]
+    for i, (node, cent) in enumerate(top_3, 1):
+        print(f"    {i}. {node}: {cent:.4f}")
     
     return centrality_dict
 
-def save_network_results(G, sex, age_group, mets_status, alpha, partial_corr_matrix):
-    """
-    Save network and analysis results
-    
-    Saves:
-    1. GEXF file for network visualization
-    2. Partial correlation matrix as CSV
-    3. Network statistics as JSON
-    """
+def save_network_results(G, sex, age_group, mets_status, alpha, partial_corr_matrix, community_stats=None):
     sex_name = SEX_DISPLAY[sex]
     base_filename = f"ggm_network_{sex_name}_{age_group}_{mets_status}"
     
@@ -343,7 +442,14 @@ def save_network_results(G, sex, age_group, mets_status, alpha, partial_corr_mat
     csv_file = OUTPUT_DIR / f"{base_filename}_partial_corr.csv"
     partial_corr_df.to_csv(csv_file)
     
-    # 3. Save network statistics
+    # 3. Save community information if available
+    if community_stats is not None:
+        community_file = OUTPUT_DIR / f"{base_filename}_communities.csv"
+        community_df = pd.DataFrame(community_stats['communities'])
+        community_df['nodes'] = community_df['nodes'].apply(lambda x: '; '.join(x))
+        community_df.to_csv(community_file, index=False)
+    
+    # 4. Save network statistics
     stats = {
         'n_nodes': G.number_of_nodes(),
         'n_edges': G.number_of_edges(),
@@ -351,146 +457,90 @@ def save_network_results(G, sex, age_group, mets_status, alpha, partial_corr_mat
         'alpha': alpha
     }
     
+    if community_stats is not None:
+        stats['n_communities'] = community_stats['n_communities']
+        stats['modularity'] = community_stats['modularity']
+    
     return gexf_file, csv_file, stats
 
 # ============================================================================
 # Main Processing
 # ============================================================================
 
-def process_all_groups(df):
-    """
-    Process all 11 groups with GGM analysis
-    """
+def process_all_groups(df, cv_method='5fold'):
     results = []
     
     for sex, age_group, mets_status, expected_n in GROUPS:
         sex_display = SEX_DISPLAY[sex]
-        print(f"\n{'='*80}")
-        print(f"🔬 Processing: {sex_display} - {age_group} - {mets_status}")
-        print(f"{'='*80}")
+        print(f" Processing: {sex_display} - {age_group} - {mets_status}")
         
-        # Filter data
         mask = (df['Sex'] == sex) & (df['Age_Group'] == age_group) & (df['MetS_Status'] == mets_status)
         group_data = df[mask].copy()
         
         n_samples = len(group_data)
-        print(f"📊 Sample size: {n_samples:,} (expected: {expected_n:,})")
-        
         if n_samples < 100:
-            print(f"⚠️  Sample size too small, skipping...")
+            print(f"  Sample size too small, skipping...")
             continue
         
         # Create GGM network
-        try:
-            G, alpha, partial_corr = create_ggm_network(
-                group_data, 
-                FOOD_GROUPS, 
-                min_correlation=0.1,  # Minimum partial correlation threshold
-                verbose=True
-            )
-            
-            # Analyze centrality
-            centrality = analyze_network_centrality(G, verbose=True)
-            
-            # Get top 3 hubs by degree centrality
-            degree_cents = {node: metrics['degree'] for node, metrics in centrality.items()}
-            top_hubs = sorted(degree_cents.items(), key=lambda x: x[1], reverse=True)[:3]
-            
-            # Save results
-            gexf_file, csv_file, stats = save_network_results(
-                G, sex, age_group, mets_status, alpha, partial_corr
-            )
-            
-            print(f"✅ Saved network: {gexf_file.name}")
-            print(f"✅ Saved partial correlations: {csv_file.name}")
-            
-            # Store summary
-            results.append({
-                'Group': f"{sex_display}_{age_group}_{mets_status}",
-                'Sex': sex_display,
-                'Age_Group': age_group,
-                'MetS_Status': mets_status,
-                'N_Samples': n_samples,
-                'N_Edges': stats['n_edges'],
-                'Density': stats['density'],
-                'Alpha': alpha,
-                'Hub_1_Name': top_hubs[0][0] if len(top_hubs) > 0 else 'None',
-                'Hub_1_Degree': top_hubs[0][1] if len(top_hubs) > 0 else 0,
-                'Hub_2_Name': top_hubs[1][0] if len(top_hubs) > 1 else 'None',
-                'Hub_2_Degree': top_hubs[1][1] if len(top_hubs) > 1 else 0,
-                'Hub_3_Name': top_hubs[2][0] if len(top_hubs) > 2 else 'None',
-                'Hub_3_Degree': top_hubs[2][1] if len(top_hubs) > 2 else 0,
-            })
-            
-        except Exception as e:
-            print(f"❌ Error processing group: {str(e)}")
-            import traceback
-            traceback.print_exc()
-            continue
-    
+        G, alpha, partial_corr = create_ggm_network(
+            group_data, 
+            FOOD_GROUPS, 
+            min_correlation=0.05,
+            cv_method=cv_method,
+        )
+        
+        # Analyze centrality
+        centrality = analyze_network_centrality(G)
+        
+        # Get top 3 hubs by degree centrality
+        degree_cents = {node: metrics['degree'] for node, metrics in centrality.items()}
+        top_hubs = sorted(degree_cents.items(), key=lambda x: x[1], reverse=True)[:3]
+        
+        # Detect communities
+        communities, modularity = detect_communities(G, method='louvain')
+        community_stats = analyze_communities(G, communities, modularity)
+        
+        # Save results
+        gexf_file, csv_file, stats = save_network_results(
+            G, sex, age_group, mets_status, alpha, partial_corr, community_stats
+        )
+        
+        # Store summary
+        results.append({
+            'Group': f"{sex_display}_{age_group}_{mets_status}",
+            'Sex': sex_display,
+            'Age_Group': age_group,
+            'MetS_Status': mets_status,
+            'N_Samples': n_samples,
+            'N_Edges': stats['n_edges'],
+            'Density': stats['density'],
+            'Alpha': alpha,
+            'N_Communities': stats.get('n_communities', 0),
+            'Modularity': stats.get('modularity', 0),
+            'Hub_1_Name': top_hubs[0][0] if len(top_hubs) > 0 else 'None',
+            'Hub_1_Degree': top_hubs[0][1] if len(top_hubs) > 0 else 0,
+            'Hub_2_Name': top_hubs[1][0] if len(top_hubs) > 1 else 'None',
+            'Hub_2_Degree': top_hubs[1][1] if len(top_hubs) > 1 else 0,
+            'Hub_3_Name': top_hubs[2][0] if len(top_hubs) > 2 else 'None',
+            'Hub_3_Degree': top_hubs[2][1] if len(top_hubs) > 2 else 0,
+        })
+        
     return pd.DataFrame(results)
 
-def main():
-    """Main execution"""
-    print("="*80)
-    print("🚀 GGM-BASED STRATIFIED DIETARY NETWORK ANALYSIS (ver4.0)")
-    print("="*80)
-    print("\nMethod: Semiparametric Gaussian Copula Graphical Models")
-    print("Improvements over ver3.0:")
-    print("  ✅ Continuous scores (not binarized)")
-    print("  ✅ Partial correlations (controlling for all other foods)")
-    print("  ✅ Graphical Lasso (removes spurious correlations)")
-    print("  ✅ Cross-validation for optimal regularization")
-    print("="*80)
-    
-    # Load data
+def main(cv_method='5fold'):
     df = load_data()
     
-    # Verify food group columns
-    missing_cols = [col for col in FOOD_GROUPS if col not in df.columns]
-    if missing_cols:
-        print(f"\n❌ Missing food group columns: {missing_cols}")
-        print(f"\n📋 Available columns:")
-        for i, col in enumerate(df.columns, 1):
-            print(f"  {i:2d}. {col}")
-        return
+    results_df = process_all_groups(df, cv_method=cv_method)
     
-    print(f"✅ All {len(FOOD_GROUPS)} food group columns found")
-    
-    # Process all groups
-    print(f"\n{'='*80}")
-    print("PROCESSING 11 STRATIFIED GROUPS")
-    print(f"{'='*80}")
-    
-    results_df = process_all_groups(df)
-    
-    # Save summary statistics
     if len(results_df) > 0:
         stats_file = OUTPUT_DIR / 'ggm_network_summary.csv'
         results_df.to_csv(stats_file, index=False)
-        print(f"\n✅ Saved summary statistics: {stats_file}")
+        print(f"\nSaved summary statistics: {stats_file}")
         
-        # Display summary
-        print("\n" + "="*80)
-        print("📊 SUMMARY: GGM Network Statistics")
-        print("="*80)
-        print(results_df[['Group', 'N_Samples', 'N_Edges', 'Density', 'Alpha']].to_string(index=False))
-        
-        print("\n" + "="*80)
-        print("🎯 TOP HUBS BY GROUP")
-        print("="*80)
-        for _, row in results_df.iterrows():
-            print(f"\n{row['Group']}:")
-            print(f"  1. {row['Hub_1_Name']} ({row['Hub_1_Degree']:.3f})")
-            print(f"  2. {row['Hub_2_Name']} ({row['Hub_2_Degree']:.3f})")
-            print(f"  3. {row['Hub_3_Name']} ({row['Hub_3_Degree']:.3f})")
-        
-        print("\n" + "="*80)
-        print("✅ ANALYSIS COMPLETE!")
-        print(f"📁 Results saved in: {OUTPUT_DIR}")
-        print("="*80)
     else:
         print("\n❌ No networks were successfully created!")
 
 if __name__ == "__main__":
-    main()
+    cv_method = 'stars'  # Options: '5fold' or 'stars'
+    main(cv_method=cv_method)

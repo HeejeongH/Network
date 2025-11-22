@@ -1,0 +1,4 @@
+community_id,size,nodes,internal_edges,internal_density
+1,4,Grain Products; Protein Foods; Salty Food Consumption; Vegetables,3,0.5
+2,2,Dairy Products; Fruits,1,1.0
+3,6,Additional Salt Use; Fried Foods; High Fat Meat; Processed Foods; Sugar-Sweetened Beverages; Sweet Food Consumption,10,0.6666666666666666

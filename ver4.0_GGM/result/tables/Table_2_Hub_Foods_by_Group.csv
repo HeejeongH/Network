@@ -1,0 +1,12 @@
+Group,N_Samples,N_Nodes,N_Edges,Density,Hub_1,Hub_1_Centrality,Hub_2,Hub_2_Centrality,Hub_3,Hub_3_Centrality,Hub_4,Hub_4_Centrality,Hub_5,Hub_5_Centrality
+Male_Young_MetS(+),516,12,13,0.197,Grain Products,0.273,Protein Foods,0.273,Fried Foods,0.273,High Fat Meat,0.273,Processed Foods,0.273
+Male_Middle_MetS(+),2938,12,14,0.212,Fried Foods,0.364,Processed Foods,0.364,Protein Foods,0.273,High Fat Meat,0.273,Sugar-Sweetened Beverages,0.273
+Male_Older_MetS(+),971,12,15,0.227,Processed Foods,0.364,Protein Foods,0.273,Fruits,0.273,Fried Foods,0.273,Sugar-Sweetened Beverages,0.273
+Male_Young_MetS(-),4737,12,14,0.212,Fried Foods,0.364,Processed Foods,0.364,Vegetables,0.273,Sugar-Sweetened Beverages,0.273,Sweet Food Consumption,0.273
+Male_Middle_MetS(-),1963,12,10,0.152,Processed Foods,0.273,Protein Foods,0.182,Vegetables,0.182,Fruits,0.182,Fried Foods,0.182
+Male_Older_MetS(-),1169,12,14,0.212,High Fat Meat,0.364,Processed Foods,0.364,Protein Foods,0.273,Fried Foods,0.273,Sugar-Sweetened Beverages,0.273
+Female_Middle_MetS(+),758,12,14,0.212,Fried Foods,0.455,High Fat Meat,0.364,Processed Foods,0.273,Sugar-Sweetened Beverages,0.273,Sweet Food Consumption,0.273
+Female_Older_MetS(+),680,12,16,0.242,Protein Foods,0.364,Processed Foods,0.364,Sugar-Sweetened Beverages,0.364,Fruits,0.273,Fried Foods,0.273
+Female_Young_MetS(-),2519,12,12,0.182,Fried Foods,0.364,Sugar-Sweetened Beverages,0.273,Grain Products,0.182,Protein Foods,0.182,Vegetables,0.182
+Female_Middle_MetS(-),5629,12,17,0.258,Processed Foods,0.455,Sugar-Sweetened Beverages,0.455,Fried Foods,0.364,High Fat Meat,0.364,Protein Foods,0.273
+Female_Older_MetS(-),1084,12,18,0.273,Fried Foods,0.455,Sugar-Sweetened Beverages,0.455,High Fat Meat,0.364,Processed Foods,0.364,Fruits,0.273
