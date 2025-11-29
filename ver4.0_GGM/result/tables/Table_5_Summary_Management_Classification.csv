@@ -1,9 +1,0 @@
-Group,Hub_Food,N_Significant_Associations,N_Aggravating_Effects,N_Alleviating_Effects,Classification
-Male_Young_MetS(+),Grain Products,2,2,0,Aggravating Factor
-Male_Middle_MetS(+),Fried Foods,4,2,2,Mixed
-Male_Middle_MetS(+),Processed Foods,3,3,0,Aggravating Factor
-Male_Middle_MetS(+),Protein Foods,2,2,0,Aggravating Factor
-Male_Older_MetS(+),Processed Foods,2,2,0,Aggravating Factor
-Female_Middle_MetS(+),Fried Foods,4,4,0,Aggravating Factor
-Female_Middle_MetS(+),Processed Foods,1,1,0,Aggravating Factor
-Female_Older_MetS(+),Protein Foods,1,0,1,Alleviating Factor
